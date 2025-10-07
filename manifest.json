@@ -1,0 +1,21 @@
+{
+  "name": "Bakery Cost Calculator",
+  "short_name": "BakeryCost",
+  "description": "Professional cost calculation and recipe management for bakery manufacturing",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#8B4513",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
