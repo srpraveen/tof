@@ -1,4 +1,6 @@
-// TRUE ORIGIN FOODS - Fixed Multi-Unit Support with Working Buttons
+// TRUE ORIGIN FOODS - Complete Multi-Unit Bakery Cost Calculator
+// Version 2.3 - Mobile Optimized & Responsive
+
 let ingredientCounter = 1;
 let ingredients = [];
 let recipes = [];
@@ -6,52 +8,45 @@ let categories = [];
 let suppliers = [];
 let currentEditingRecipe = null;
 
-// Unit conversion rates (all to smallest unit)
+// Unit conversion system
 const unitConversions = {
-    // Weight units (to grams)
     'g': 1,
     'kg': 1000,
-    // Volume units (to ml)
     'ml': 1,
     'ltr': 1000,
-    // Count units
     'pcs': 1
 };
 
-// Get base unit for pricing
 function getBaseUnit(unit) {
     if (unit === 'g') return 'kg';
     if (unit === 'ml') return 'ltr';
     return 'pcs';
 }
 
-// Convert quantity to base unit for pricing calculation
 function convertToBaseUnit(quantity, unit) {
     const baseUnit = getBaseUnit(unit);
     if (baseUnit === 'kg' && unit === 'g') return quantity / 1000;
     if (baseUnit === 'ltr' && unit === 'ml') return quantity / 1000;
-    return quantity; // For pieces
+    return quantity;
 }
 
-// Initialize app with enhanced data structure
+// Initialize app
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('TRUE ORIGIN FOODS - Multi-Unit Bakery Cost Calculator Starting...');
+    console.log('TRUE ORIGIN FOODS - Initializing...');
 
-    // Enhanced suppliers with credit days
     suppliers = [
-        { id: 1, name: 'ABC Supplies', contact: '+91-9876543210', email: 'sales@abcsupplies.com', address: 'Mumbai, Maharashtra', creditDays: 30 },
-        { id: 2, name: 'XYZ Traders', contact: '+91-9876543211', email: 'info@xyztraders.com', address: 'Delhi, NCR', creditDays: 15 },
-        { id: 3, name: 'Sweet Co', contact: '+91-9876543212', email: 'orders@sweetco.com', address: 'Pune, Maharashtra', creditDays: 45 },
-        { id: 4, name: 'Dairy Best', contact: '+91-9876543213', email: 'supply@dairybest.com', address: 'Bangalore, Karnataka', creditDays: 30 }
+        { id: 1, name: 'ABC Supplies', contact: '+91-9876543210', email: 'sales@abcsupplies.com', address: 'Mumbai', creditDays: 30 },
+        { id: 2, name: 'XYZ Traders', contact: '+91-9876543211', email: 'info@xyztraders.com', address: 'Delhi', creditDays: 15 },
+        { id: 3, name: 'Sweet Co', contact: '+91-9876543212', email: 'orders@sweetco.com', address: 'Pune', creditDays: 45 },
+        { id: 4, name: 'Dairy Best', contact: '+91-9876543213', email: 'supply@dairybest.com', address: 'Bangalore', creditDays: 30 }
     ];
 
-    // Enhanced ingredients with units
     ingredients = [
         { 
             id: 1, 
             name: 'Flour',
             category: 'Grains',
-            unit: 'kg', // Base unit for pricing
+            unit: 'kg',
             suppliers: [
                 { supplierId: 1, currentPrice: 45.00, lastUpdated: '2025-09-20', priceHistory: [{ price: 45.00, date: '2025-09-20' }] },
                 { supplierId: 2, currentPrice: 47.00, lastUpdated: '2025-09-20', priceHistory: [{ price: 47.00, date: '2025-09-20' }] }
@@ -61,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 2, 
             name: 'Milk',
             category: 'Dairy',
-            unit: 'ltr', // Base unit for pricing
+            unit: 'ltr',
             suppliers: [
                 { supplierId: 4, currentPrice: 65.00, lastUpdated: '2025-09-20', priceHistory: [{ price: 65.00, date: '2025-09-20' }] }
             ]
@@ -70,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 3, 
             name: 'Eggs',
             category: 'Protein',
-            unit: 'pcs', // Base unit for pricing
+            unit: 'pcs',
             suppliers: [
                 { supplierId: 3, currentPrice: 8.00, lastUpdated: '2025-09-20', priceHistory: [{ price: 8.00, date: '2025-09-20' }] }
             ]
@@ -95,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
-    // Categories with editable margins
     categories = [
         { id: 1, name: 'Cakes', subcategories: ['Birthday Cakes', 'Wedding Cakes'], margin: 45 },
         { id: 2, name: 'Cookies', subcategories: ['Chocolate Chip', 'Sugar Cookies'], margin: 40 },
@@ -109,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSuppliers();
     updateDashboard();
 
-    console.log('Multi-unit application initialized successfully');
+    console.log('Application initialized successfully');
 });
 
 // Login functions
@@ -128,6 +122,8 @@ function login() {
 function logout() {
     document.getElementById('loginScreen').classList.remove('hidden');
     document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
 }
 
 function showMainApp() {
@@ -135,7 +131,7 @@ function showMainApp() {
     document.getElementById('mainApp').classList.remove('hidden');
 }
 
-// Password modal functions
+// Password modal
 function openPasswordModal() {
     document.getElementById('passwordModal').style.display = 'block';
 }
@@ -159,19 +155,17 @@ function changePassword() {
     }
 
     if (newPass.length < 6) {
-        showPasswordAlert('New password must be at least 6 characters long', 'danger');
+        showPasswordAlert('New password must be at least 6 characters', 'danger');
         return;
     }
 
     if (newPass !== confirm) {
-        showPasswordAlert('New passwords do not match', 'danger');
+        showPasswordAlert('Passwords do not match', 'danger');
         return;
     }
 
     showPasswordAlert('Password changed successfully!', 'success');
-    setTimeout(() => {
-        closePasswordModal();
-    }, 2000);
+    setTimeout(() => closePasswordModal(), 2000);
 }
 
 function showPasswordAlert(message, type) {
@@ -181,7 +175,7 @@ function showPasswordAlert(message, type) {
     alertDiv.classList.remove('hidden');
 }
 
-// Enhanced tab navigation
+// Tab navigation
 function showTab(tabName) {
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(tab => tab.classList.remove('active'));
@@ -209,7 +203,7 @@ function showTab(tabName) {
     }
 }
 
-// Enhanced supplier management with sleek design
+// Supplier management
 function loadSuppliers() {
     const supplierSelects = document.querySelectorAll('select[id*="supplier"]:not([id*="Ingredient"])');
     supplierSelects.forEach(select => {
@@ -230,11 +224,10 @@ function displaySuppliers() {
     if (!container) return;
 
     if (suppliers.length === 0) {
-        container.innerHTML = '<p>No suppliers found. Add your first supplier above.</p>';
+        container.innerHTML = '<p>No suppliers found.</p>';
         return;
     }
 
-    // Create sleek expandable list
     container.innerHTML = `
         <div class="sleek-list">
             <div class="sleek-header" onclick="toggleSuppliersList()">
@@ -304,29 +297,24 @@ function viewSupplierProducts(supplierId) {
     const content = document.getElementById('supplierDetailContent');
     content.innerHTML = `
         <div class="card">
-            <div class="supplier-detail-header">
-                <h2>${supplier.name} - Product Catalog</h2>
-                <div class="supplier-detail-info">
-                    <p><strong>Contact:</strong> ${supplier.contact} | <strong>Email:</strong> ${supplier.email}</p>
-                    <p><strong>Credit Terms:</strong> ${supplier.creditDays} days</p>
-                </div>
+            <h2>${supplier.name} - Product Catalog</h2>
+            <p><strong>Contact:</strong> ${supplier.contact} | <strong>Email:</strong> ${supplier.email}</p>
+            <p><strong>Credit Terms:</strong> ${supplier.creditDays} days</p>
+
+            <div style="margin: 1.5rem 0;">
+                <button class="btn btn-success" onclick="addProductToSupplier(${supplierId})">Add New Product</button>
             </div>
 
-            <div class="products-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3>Products & Pricing</h3>
-                    <button class="btn btn-success" onclick="addProductToSupplier(${supplierId})">Add New Product</button>
-                </div>
-
-                ${products.length === 0 ? 
-                    '<p>No products found for this supplier.</p>' :
-                    `<table class="table">
+            ${products.length === 0 ? 
+                '<p>No products for this supplier.</p>' :
+                `<div class="table-container">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Product</th>
                                 <th>Category</th>
-                                <th>Current Price</th>
-                                <th>Last Updated</th>
+                                <th>Price</th>
+                                <th>Updated</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -338,20 +326,19 @@ function viewSupplierProducts(supplierId) {
                                     <td class="rupee">₹${product.price.toFixed(2)}/${product.unit}</td>
                                     <td>${product.lastUpdated}</td>
                                     <td>
-                                        <button class="btn btn-secondary btn-small" onclick="updateProductPrice(${product.id}, ${supplierId})">Update Price</button>
+                                        <button class="btn btn-secondary btn-small" onclick="updateProductPrice(${product.id}, ${supplierId})">Update</button>
                                         <button class="btn btn-primary btn-small" onclick="showPriceHistory(${product.id})">History</button>
                                         <button class="btn btn-danger btn-small" onclick="removeProductFromSupplier(${product.id}, ${supplierId})">Remove</button>
                                     </td>
                                 </tr>
                             `).join('')}
                         </tbody>
-                    </table>`
-                }
-            </div>
+                    </table>
+                </div>`
+            }
         </div>
     `;
 
-    // Show supplier detail view
     document.getElementById('suppliers').classList.remove('active');
     document.getElementById('supplierDetail').classList.add('active');
 }
@@ -372,18 +359,15 @@ function addNewSupplier() {
         return;
     }
 
-    const supplier = {
+    suppliers.push({
         id: Date.now(),
         name: name,
         contact: contact,
         email: email,
         address: 'Address not specified',
         creditDays: creditDays
-    };
+    });
 
-    suppliers.push(supplier);
-
-    // Clear form
     document.getElementById('newSupplierName').value = '';
     document.getElementById('newSupplierContact').value = '';
     document.getElementById('newSupplierEmail').value = '';
@@ -396,7 +380,6 @@ function addNewSupplier() {
     updateDashboard();
 }
 
-// Fixed edit supplier functionality with proper modal
 function openEditSupplierModal(supplierId) {
     const supplier = suppliers.find(s => s.id === supplierId);
     if (!supplier) return;
@@ -416,20 +399,10 @@ function saveSupplierEdit() {
 
     if (!supplier) return;
 
-    const newName = document.getElementById('editSupplierName').value.trim();
-    const newContact = document.getElementById('editSupplierContact').value.trim();
-    const newEmail = document.getElementById('editSupplierEmail').value.trim();
-    const newCreditDays = parseInt(document.getElementById('editSupplierCreditDays').value) || 30;
-
-    if (!newName || !newContact || !newEmail) {
-        alert('Please fill in all required fields');
-        return;
-    }
-
-    supplier.name = newName;
-    supplier.contact = newContact;
-    supplier.email = newEmail;
-    supplier.creditDays = newCreditDays;
+    supplier.name = document.getElementById('editSupplierName').value.trim();
+    supplier.contact = document.getElementById('editSupplierContact').value.trim();
+    supplier.email = document.getElementById('editSupplierEmail').value.trim();
+    supplier.creditDays = parseInt(document.getElementById('editSupplierCreditDays').value) || 30;
 
     closeModal('supplierEditModal');
     displaySuppliers();
@@ -437,46 +410,34 @@ function saveSupplierEdit() {
     showAlert('supplierAlert');
 }
 
-// Safe supplier deletion with recipe dependency check
 function deleteSupplierSafely(supplierId) {
     const supplier = suppliers.find(s => s.id === supplierId);
     if (!supplier) return;
 
-    // Check which recipes use this supplier
     const dependentRecipes = [];
     recipes.forEach(recipe => {
         recipe.ingredients.forEach(ingredient => {
-            if (ingredient.supplierId === supplierId) {
-                if (!dependentRecipes.includes(recipe.name)) {
-                    dependentRecipes.push(recipe.name);
-                }
+            if (ingredient.supplierId === supplierId && !dependentRecipes.includes(recipe.name)) {
+                dependentRecipes.push(recipe.name);
             }
         });
     });
 
     if (dependentRecipes.length > 0) {
-        const recipeList = dependentRecipes.join(', ');
-        const message = `Cannot delete ${supplier.name}!\n\nThis supplier is currently used in the following recipes:\n\n${recipeList}\n\nPlease update these recipes to use different suppliers before deleting this supplier.`;
-        alert(message);
+        alert(`Cannot delete ${supplier.name}! Used in recipes: ${dependentRecipes.join(', ')}`);
         return;
     }
 
-    // Check if supplier has products (ingredients)
     const supplierProducts = getSupplierProducts(supplierId);
     if (supplierProducts.length > 0) {
-        const productList = supplierProducts.map(p => p.name).join(', ');
-        if (!confirm(`${supplier.name} supplies the following products: ${productList}\n\nDeleting this supplier will remove these product associations. Continue?`)) {
-            return;
-        }
+        if (!confirm(`${supplier.name} has ${supplierProducts.length} products. Continue?`)) return;
 
-        // Remove supplier from all ingredients
         ingredients.forEach(ingredient => {
             ingredient.suppliers = ingredient.suppliers.filter(s => s.supplierId !== supplierId);
         });
     }
 
-    // Final confirmation
-    if (confirm(`Are you sure you want to delete ${supplier.name}?\n\nThis action cannot be undone.`)) {
+    if (confirm(`Delete ${supplier.name}?`)) {
         suppliers = suppliers.filter(s => s.id !== supplierId);
         displaySuppliers();
         loadSuppliers();
@@ -486,7 +447,7 @@ function deleteSupplierSafely(supplierId) {
     }
 }
 
-// Enhanced ingredient management with WORKING BUTTONS
+// Ingredient management
 function addIngredientToMaster() {
     const name = document.getElementById('newIngredientName').value.trim();
     const unit = document.getElementById('newIngredientUnit').value;
@@ -501,15 +462,14 @@ function addIngredientToMaster() {
         return;
     }
 
-    const ingredient = {
+    ingredients.push({
         id: Date.now(),
         name: name,
         category: 'General',
-        unit: unit, // Base unit for pricing
+        unit: unit,
         suppliers: []
-    };
+    });
 
-    ingredients.push(ingredient);
     loadIngredients();
     displayIngredients();
     updateDashboard();
@@ -524,11 +484,10 @@ function displayIngredients() {
     if (!container) return;
 
     if (ingredients.length === 0) {
-        container.innerHTML = '<p>No ingredients found. Add your first ingredient above.</p>';
+        container.innerHTML = '<p>No ingredients found.</p>';
         return;
     }
 
-    // Create sleek expandable list with WORKING BUTTONS
     container.innerHTML = `
         <div class="sleek-list">
             <div class="sleek-header" onclick="toggleIngredientsList()">
@@ -553,30 +512,28 @@ function displayIngredients() {
                                     <p><strong>Suppliers:</strong> ${ingredient.suppliers.length}</p>
                                 </div>
                                 <div id="ingredient-details-${ingredient.id}" class="ingredient-details" style="display: none;">
-                                    <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                                        ${ingredient.suppliers.length === 0 ? 
-                                            '<p style="margin: 0.5rem 0;">No suppliers added</p>' : 
-                                            ingredient.suppliers.map(supplierData => {
-                                                const supplier = suppliers.find(s => s.id === supplierData.supplierId);
-                                                return supplier ? `
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
-                                                        <div>
-                                                            <strong>${supplier.name}</strong><br>
-                                                            <span class="rupee">₹${supplierData.currentPrice.toFixed(2)}/${ingredient.unit}</span>
-                                                            <small> (Updated: ${supplierData.lastUpdated})</small>
-                                                        </div>
-                                                        <div>
-                                                            <button class="btn btn-secondary btn-small" onclick="editIngredientSupplier(${ingredient.id}, ${supplier.id})">Edit Price</button>
-                                                            <button class="btn btn-danger btn-small" onclick="deleteIngredientSupplier(${ingredient.id}, ${supplier.id})">Remove</button>
-                                                        </div>
+                                    ${ingredient.suppliers.length === 0 ? 
+                                        '<p>No suppliers added</p>' : 
+                                        ingredient.suppliers.map(supplierData => {
+                                            const supplier = suppliers.find(s => s.id === supplierData.supplierId);
+                                            return supplier ? `
+                                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                                                    <div>
+                                                        <strong>${supplier.name}</strong><br>
+                                                        <span class="rupee">₹${supplierData.currentPrice.toFixed(2)}/${ingredient.unit}</span>
+                                                        <small> (${supplierData.lastUpdated})</small>
                                                     </div>
-                                                ` : '';
-                                            }).join('')
-                                        }
-                                        <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                            <button class="btn btn-success btn-small" onclick="addSupplierToIngredient(${ingredient.id})">Add Supplier</button>
-                                            <button class="btn btn-primary btn-small" onclick="showPriceHistory(${ingredient.id})">Price History</button>
-                                        </div>
+                                                    <div>
+                                                        <button class="btn btn-secondary btn-small" onclick="editIngredientSupplier(${ingredient.id}, ${supplier.id})">Edit</button>
+                                                        <button class="btn btn-danger btn-small" onclick="deleteIngredientSupplier(${ingredient.id}, ${supplier.id})">Remove</button>
+                                                    </div>
+                                                </div>
+                                            ` : '';
+                                        }).join('')
+                                    }
+                                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                                        <button class="btn btn-success btn-small" onclick="addSupplierToIngredient(${ingredient.id})">Add Supplier</button>
+                                        <button class="btn btn-primary btn-small" onclick="showPriceHistory(${ingredient.id})">Price History</button>
                                     </div>
                                 </div>
                             </div>
@@ -602,16 +559,13 @@ function toggleIngredientDetails(ingredientId) {
     const details = document.getElementById(`ingredient-details-${ingredientId}`);
     const isVisible = details.style.display !== 'none';
 
-    // Hide all other expanded details
     document.querySelectorAll('[id^="ingredient-details-"]').forEach(el => {
         el.style.display = 'none';
     });
 
-    // Toggle current item
     details.style.display = isVisible ? 'none' : 'block';
 }
 
-// WORKING supplier management for ingredients
 function addSupplierToIngredient(ingredientId) {
     const ingredient = ingredients.find(ing => ing.id === ingredientId);
     const availableSuppliers = suppliers.filter(supplier => 
@@ -619,20 +573,18 @@ function addSupplierToIngredient(ingredientId) {
     );
 
     if (availableSuppliers.length === 0) {
-        alert('All suppliers are already associated with this ingredient.');
+        alert('All suppliers already associated');
         return;
     }
 
     document.getElementById('supplierModal').style.display = 'block';
     document.getElementById('supplierIngredientId').value = ingredientId;
     document.getElementById('supplierEditId').value = '';
-    document.getElementById('supplierModalTitle').textContent = 'Add Supplier to Ingredient';
-
-    // Update price unit label
+    document.getElementById('supplierModalTitle').textContent = 'Add Supplier';
     document.getElementById('supplierPriceUnit').textContent = ingredient.unit;
 
     const supplierSelect = document.getElementById('supplierNameSelect');
-    supplierSelect.innerHTML = '<option value="">Select existing supplier</option>';
+    supplierSelect.innerHTML = '<option value="">Select supplier</option>';
     availableSuppliers.forEach(supplier => {
         const option = document.createElement('option');
         option.value = supplier.id;
@@ -651,13 +603,11 @@ function editIngredientSupplier(ingredientId, supplierId) {
     document.getElementById('supplierModal').style.display = 'block';
     document.getElementById('supplierIngredientId').value = ingredientId;
     document.getElementById('supplierEditId').value = supplierId;
-    document.getElementById('supplierModalTitle').textContent = 'Edit Supplier Price';
-
-    // Update price unit label
+    document.getElementById('supplierModalTitle').textContent = 'Edit Price';
     document.getElementById('supplierPriceUnit').textContent = ingredient.unit;
 
     const supplierSelect = document.getElementById('supplierNameSelect');
-    supplierSelect.innerHTML = `<option value="${supplier.id}" selected>${supplier.name}</option>`;
+    supplierSelect.innerHTML = `<option value="${supplier.id}">${supplier.name}</option>`;
     supplierSelect.disabled = true;
 
     document.getElementById('supplierPrice').value = supplierData.currentPrice;
@@ -670,7 +620,7 @@ function saveSupplier() {
     const price = parseFloat(document.getElementById('supplierPrice').value);
 
     if (!selectedSupplierId || !price) {
-        alert('Please select a supplier and enter a price');
+        alert('Please fill all fields');
         return;
     }
 
@@ -678,7 +628,6 @@ function saveSupplier() {
     if (!ingredient) return;
 
     if (supplierId) {
-        // Edit existing supplier
         const supplierData = ingredient.suppliers.find(s => s.supplierId == supplierId);
         if (supplierData) {
             supplierData.priceHistory.push({
@@ -689,16 +638,11 @@ function saveSupplier() {
             supplierData.lastUpdated = new Date().toISOString().split('T')[0];
         }
     } else {
-        // Add new supplier
-        const selectedSupplierId_int = parseInt(selectedSupplierId);
         ingredient.suppliers.push({
-            supplierId: selectedSupplierId_int,
+            supplierId: parseInt(selectedSupplierId),
             currentPrice: price,
             lastUpdated: new Date().toISOString().split('T')[0],
-            priceHistory: [{
-                price: price,
-                date: new Date().toISOString().split('T')[0]
-            }]
+            priceHistory: [{ price: price, date: new Date().toISOString().split('T')[0] }]
         });
     }
 
@@ -709,7 +653,7 @@ function saveSupplier() {
 }
 
 function deleteIngredientSupplier(ingredientId, supplierId) {
-    if (confirm('Are you sure you want to remove this supplier from the ingredient?')) {
+    if (confirm('Remove this supplier?')) {
         const ingredient = ingredients.find(ing => ing.id === ingredientId);
         ingredient.suppliers = ingredient.suppliers.filter(s => s.supplierId !== supplierId);
         displayIngredients();
@@ -720,12 +664,10 @@ function deleteIngredientSupplier(ingredientId, supplierId) {
 function closeSupplierModal() {
     document.getElementById('supplierModal').style.display = 'none';
     document.getElementById('supplierModalAlert').classList.add('hidden');
-
-    const supplierSelect = document.getElementById('supplierNameSelect');
-    supplierSelect.disabled = false;
+    document.getElementById('supplierNameSelect').disabled = false;
 }
 
-// FIXED: Enhanced category management with working selection
+// Category management
 function addCategory() {
     const name = document.getElementById('newCategoryName').value.trim();
     const margin = parseFloat(document.getElementById('newCategoryMargin').value) || 40;
@@ -740,24 +682,19 @@ function addCategory() {
         return;
     }
 
-    const category = {
+    categories.push({
         id: Date.now(),
         name: name,
         subcategories: [],
         margin: margin
-    };
+    });
 
-    categories.push(category);
-
-    // Clear inputs
     document.getElementById('newCategoryName').value = '';
     document.getElementById('newCategoryMargin').value = '';
 
-    // Refresh all category-related UI elements
     loadCategories();
     loadCategoryDropdowns();
     displayCategories();
-
     showAlert('categoryAlert');
 }
 
@@ -766,7 +703,7 @@ function addSubcategory() {
     const name = document.getElementById('newSubcategoryName').value.trim();
 
     if (!parentId || !name) {
-        alert('Please select a parent category and enter subcategory name');
+        alert('Please select parent and enter name');
         return;
     }
 
@@ -778,25 +715,21 @@ function addSubcategory() {
         }
 
         category.subcategories.push(name);
-
         document.getElementById('newSubcategoryName').value = '';
-
         displayCategories();
         loadCategories();
-
         showAlert('categoryAlert');
     }
 }
 
 function editCategoryMargin(categoryId) {
     const category = categories.find(cat => cat.id === categoryId);
-    const newMargin = prompt(`Enter new margin % for ${category.name} (10-80%):`, category.margin);
+    const newMargin = prompt(`Enter new margin % for ${category.name}:`, category.margin);
 
     if (newMargin && !isNaN(newMargin) && newMargin >= 10 && newMargin <= 80) {
         category.margin = parseFloat(newMargin);
         displayCategories();
 
-        // Update any open recipe forms
         const currentCategory = document.getElementById('recipeCategory')?.value;
         if (currentCategory === category.name) {
             document.getElementById('profitMargin').value = category.margin;
@@ -804,15 +737,13 @@ function editCategoryMargin(categoryId) {
         }
 
         showAlert('categoryAlert');
-    } else if (newMargin !== null) {
-        alert('Please enter a valid margin between 10% and 80%');
     }
 }
 
 function loadCategoryDropdowns() {
     const parentSelect = document.getElementById('parentCategory');
     if (parentSelect) {
-        parentSelect.innerHTML = '<option value="">Select parent category</option>';
+        parentSelect.innerHTML = '<option value="">Select category</option>';
         categories.forEach(category => {
             const option = document.createElement('option');
             option.value = category.id;
@@ -827,11 +758,10 @@ function displayCategories() {
     if (!container) return;
 
     if (categories.length === 0) {
-        container.innerHTML = '<p>No categories found. Add your first category above.</p>';
+        container.innerHTML = '<p>No categories found.</p>';
         return;
     }
 
-    // Create sleek expandable list
     container.innerHTML = `
         <div class="sleek-list">
             <div class="sleek-header" onclick="toggleCategoriesList()">
@@ -842,7 +772,7 @@ function displayCategories() {
                 ${categories.map(category => `
                     <div class="category-item">
                         <span><strong>${category.name}</strong> 
-                            <span class="editable-margin" onclick="editCategoryMargin(${category.id})" title="Click to edit margin">
+                            <span class="editable-margin" onclick="editCategoryMargin(${category.id})">
                                 ${category.margin}%
                             </span>
                         </span>
@@ -871,7 +801,7 @@ function toggleCategoriesList() {
 }
 
 function deleteCategory(categoryId) {
-    if (confirm('Are you sure you want to delete this category and all its subcategories?')) {
+    if (confirm('Delete this category and subcategories?')) {
         categories = categories.filter(cat => cat.id !== categoryId);
         displayCategories();
         loadCategories();
@@ -880,7 +810,7 @@ function deleteCategory(categoryId) {
 }
 
 function deleteSubcategory(categoryId, subcatIndex) {
-    if (confirm('Are you sure you want to delete this subcategory?')) {
+    if (confirm('Delete this subcategory?')) {
         const category = categories.find(cat => cat.id === categoryId);
         if (category) {
             category.subcategories.splice(subcatIndex, 1);
@@ -890,7 +820,7 @@ function deleteSubcategory(categoryId, subcatIndex) {
     }
 }
 
-// Load ingredients into recipe dropdowns
+// Load ingredients into dropdowns
 function loadIngredients() {
     const selects = document.querySelectorAll('select[id^="ingredient"]:not([id$="Id"])');
 
@@ -905,7 +835,7 @@ function loadIngredients() {
     });
 }
 
-// Load categories into recipe dropdown
+// Load categories into dropdown
 function loadCategories() {
     const categorySelect = document.getElementById('recipeCategory');
     if (categorySelect) {
@@ -918,14 +848,12 @@ function loadCategories() {
         });
     }
 
-    // Update subcategories when category changes
     if (categorySelect && !categorySelect.hasAttribute('data-listener')) {
         categorySelect.addEventListener('change', updateSubcategories);
         categorySelect.setAttribute('data-listener', 'true');
     }
 }
 
-// Update subcategories based on selected category
 function updateSubcategories() {
     const categoryName = document.getElementById('recipeCategory').value;
     const subcategorySelect = document.getElementById('recipeSubcategory');
@@ -942,24 +870,20 @@ function updateSubcategories() {
         });
     }
 
-    // Auto-set profit margin based on category
     if (category && category.margin) {
         document.getElementById('profitMargin').value = category.margin;
         calculateTotalCost();
     }
 }
 
-// Enhanced ingredient suppliers with unit support
+// Update ingredient suppliers
 function updateIngredientSuppliers(rowId) {
     const ingredientSelect = document.getElementById(`ingredient${rowId}`);
     const supplierSelect = document.getElementById(`supplier${rowId}`);
     const priceInput = document.getElementById(`price${rowId}`);
     const unitSelect = document.getElementById(`unit${rowId}`);
 
-    if (!ingredientSelect || !supplierSelect || !priceInput || !unitSelect) {
-        console.error('Elements not found for row', rowId);
-        return;
-    }
+    if (!ingredientSelect || !supplierSelect || !priceInput || !unitSelect) return;
 
     supplierSelect.innerHTML = '<option value="">Select supplier</option>';
     priceInput.value = '';
@@ -978,7 +902,6 @@ function updateIngredientSuppliers(rowId) {
                 }
             });
 
-            // Set appropriate unit options based on ingredient type
             updateUnitOptions(unitSelect, ingredient.unit);
         }
     }
@@ -986,24 +909,21 @@ function updateIngredientSuppliers(rowId) {
     calculateRowCost(rowId);
 }
 
-// Update unit options based on ingredient base unit
 function updateUnitOptions(unitSelect, baseUnit) {
     let options = [];
 
     if (baseUnit === 'kg') {
         options = [
-            { value: 'g', text: 'g (grams)' },
-            { value: 'kg', text: 'kg (kilograms)' }
+            { value: 'g', text: 'g' },
+            { value: 'kg', text: 'kg' }
         ];
     } else if (baseUnit === 'ltr') {
         options = [
-            { value: 'ml', text: 'ml (milliliters)' },
-            { value: 'ltr', text: 'ltr (liters)' }
+            { value: 'ml', text: 'ml' },
+            { value: 'ltr', text: 'ltr' }
         ];
     } else if (baseUnit === 'pcs') {
-        options = [
-            { value: 'pcs', text: 'pcs (pieces)' }
-        ];
+        options = [{ value: 'pcs', text: 'pcs' }];
     }
 
     const currentValue = unitSelect.value;
@@ -1016,22 +936,17 @@ function updateUnitOptions(unitSelect, baseUnit) {
         unitSelect.appendChild(optionElement);
     });
 
-    // Restore previous selection if valid
     if (options.some(opt => opt.value === currentValue)) {
         unitSelect.value = currentValue;
     }
 }
 
-// Update price when supplier changes
 function updateSupplierPrice(rowId) {
     const ingredientSelect = document.getElementById(`ingredient${rowId}`);
     const supplierSelect = document.getElementById(`supplier${rowId}`);
     const priceInput = document.getElementById(`price${rowId}`);
 
-    if (!ingredientSelect || !supplierSelect || !priceInput) {
-        console.error('Elements not found for row', rowId);
-        return;
-    }
+    if (!ingredientSelect || !supplierSelect || !priceInput) return;
 
     if (ingredientSelect.value && supplierSelect.value) {
         const ingredient = ingredients.find(ing => ing.id == ingredientSelect.value);
@@ -1049,31 +964,25 @@ function updateSupplierPrice(rowId) {
     calculateRowCost(rowId);
 }
 
-// Enhanced cost calculation with multi-unit support
 function calculateRowCost(rowId) {
     const quantityInput = document.getElementById(`quantity${rowId}`);
     const unitSelect = document.getElementById(`unit${rowId}`);
     const priceInput = document.getElementById(`price${rowId}`);
     const costSpan = document.getElementById(`cost${rowId}`);
 
-    if (!quantityInput || !unitSelect || !priceInput || !costSpan) {
-        return;  
-    }
+    if (!quantityInput || !unitSelect || !priceInput || !costSpan) return;
 
     const quantity = parseFloat(quantityInput.value) || 0;
     const unit = unitSelect.value;
     const pricePerBaseUnit = parseFloat(priceInput.value) || 0;
 
-    // Convert quantity to base unit for calculation
     const baseQuantity = convertToBaseUnit(quantity, unit);
     const cost = baseQuantity * pricePerBaseUnit;
 
     costSpan.textContent = `₹${cost.toFixed(2)}`;
-
     calculateTotalCost();
 }
 
-// Enhanced cost calculation
 function calculateTotalCost() {
     let totalIngredientCost = 0;
 
@@ -1110,7 +1019,6 @@ function calculateTotalCost() {
     const costPerUnit = grandTotal / batchSize;
     const suggestedPricePerUnit = suggestedTotalPrice / batchSize;
 
-    // Update batch size display
     if (document.getElementById('batchSizeDisplay')) {
         document.getElementById('batchSizeDisplay').textContent = batchSize;
     }
@@ -1134,7 +1042,6 @@ function calculateTotalCost() {
     });
 }
 
-// Add new ingredient row with multi-unit support
 function addIngredient() {
     const tbody = document.querySelector('#ingredientsTable tbody');
     const newRow = document.createElement('tr');
@@ -1143,13 +1050,13 @@ function addIngredient() {
     newRow.innerHTML = `
         <td>
             <select id="ingredient${ingredientCounter}" onchange="updateIngredientSuppliers(${ingredientCounter})">
-                <option value="">Select ingredient</option>
-                ${ingredients.map(ing => `<option value="${ing.id}">${ing.name} (${ing.category})</option>`).join('')}
+                <option value="">Select</option>
+                ${ingredients.map(ing => `<option value="${ing.id}">${ing.name}</option>`).join('')}
             </select>
         </td>
         <td>
             <select id="supplier${ingredientCounter}" onchange="updateSupplierPrice(${ingredientCounter})">
-                <option value="">Select supplier</option>
+                <option value="">Select</option>
             </select>
         </td>
         <td>
@@ -1162,16 +1069,15 @@ function addIngredient() {
                 </select>
             </div>
         </td>
-        <td><input type="number" id="price${ingredientCounter}" onchange="calculateRowCost(${ingredientCounter})" oninput="calculateRowCost(${ingredientCounter})" placeholder="0.00" step="0.01" readonly /></td>
-        <td><span id="cost${ingredientCounter}" class="rupee">₹0.00</span></td>
-        <td><button class="btn btn-danger btn-small" onclick="removeIngredient(${ingredientCounter})">Remove</button></td>
+        <td><input type="number" id="price${ingredientCounter}" placeholder="0" step="0.01" readonly /></td>
+        <td><span id="cost${ingredientCounter}" class="rupee">₹0</span></td>
+        <td><button class="btn btn-danger btn-small" onclick="removeIngredient(${ingredientCounter})">×</button></td>
     `;
 
     tbody.appendChild(newRow);
     ingredientCounter++;
 }
 
-// Remove ingredient row
 function removeIngredient(rowId) {
     const row = document.getElementById(`ingredientRow${rowId}`);
     if (row) {
@@ -1180,7 +1086,6 @@ function removeIngredient(rowId) {
     }
 }
 
-// Enhanced recipe saving with multi-unit support
 function saveRecipe() {
     const name = document.getElementById('recipeName').value.trim();
 
@@ -1201,9 +1106,7 @@ function saveRecipe() {
         const priceInput = document.getElementById(`price${id}`);
         const costSpan = document.getElementById(`cost${id}`);
 
-        if (ingredientSelect?.value && supplierSelect?.value && 
-            quantityInput?.value && priceInput?.value) {
-
+        if (ingredientSelect?.value && supplierSelect?.value && quantityInput?.value && priceInput?.value) {
             const ingredient = ingredients.find(ing => ing.id == ingredientSelect.value);
             const supplier = suppliers.find(sup => sup.id == supplierSelect.value);
 
@@ -1221,7 +1124,7 @@ function saveRecipe() {
     });
 
     if (recipeIngredients.length === 0) {
-        alert('Please add at least one valid ingredient');
+        alert('Please add at least one ingredient');
         return;
     }
 
@@ -1261,14 +1164,12 @@ function saveRecipe() {
     updateDashboard();
 }
 
-// Edit recipe function  
 function editRecipe(recipeId) {
     const recipe = recipes.find(r => r.id === recipeId);
     if (!recipe) return;
 
     currentEditingRecipe = recipe;
 
-    // Fill form with recipe data
     document.getElementById('recipeName').value = recipe.name;
     document.getElementById('recipeCategory').value = recipe.category;
     updateSubcategories();
@@ -1282,12 +1183,10 @@ function editRecipe(recipeId) {
     document.getElementById('batchSize').value = recipe.batchSize || 1;
     document.getElementById('profitMargin').value = recipe.profitMargin;
 
-    // Clear existing ingredient rows
     const tbody = document.querySelector('#ingredientsTable tbody');
     tbody.innerHTML = '';
     ingredientCounter = 0;
 
-    // Add ingredient rows
     recipe.ingredients.forEach((ingredient, index) => {
         addIngredient();
         const rowId = ingredientCounter - 1;
@@ -1304,22 +1203,18 @@ function editRecipe(recipeId) {
         }, 100);
     });
 
-    // Show editing indicator
     document.getElementById('editingRecipeName').textContent = recipe.name;
     document.getElementById('editingRecipe').classList.remove('hidden');
 
-    // Switch to recipes tab
     showTab('costing');
 }
 
-// Cancel edit
 function cancelEdit() {
     currentEditingRecipe = null;
     document.getElementById('editingRecipe').classList.add('hidden');
     clearRecipe();
 }
 
-// Clear recipe form
 function clearRecipe() {
     document.getElementById('recipeName').value = '';
     document.getElementById('recipeCategory').value = '';
@@ -1336,17 +1231,8 @@ function clearRecipe() {
     const tbody = document.querySelector('#ingredientsTable tbody');
     tbody.innerHTML = `
         <tr id="ingredientRow0">
-            <td>
-                <select id="ingredient0" onchange="updateIngredientSuppliers(0)">
-                    <option value="">Select ingredient</option>
-                    ${ingredients.map(ing => `<option value="${ing.id}">${ing.name} (${ing.category})</option>`).join('')}
-                </select>
-            </td>
-            <td>
-                <select id="supplier0" onchange="updateSupplierPrice(0)">
-                    <option value="">Select supplier</option>
-                </select>
-            </td>
+            <td><select id="ingredient0" onchange="updateIngredientSuppliers(0)"><option value="">Select</option>${ingredients.map(ing => `<option value="${ing.id}">${ing.name}</option>`).join('')}</select></td>
+            <td><select id="supplier0" onchange="updateSupplierPrice(0)"><option value="">Select</option></select></td>
             <td>
                 <div class="unit-input-group">
                     <input type="number" id="quantity0" onchange="calculateRowCost(0)" oninput="calculateRowCost(0)" placeholder="0" min="0" step="0.1" />
@@ -1357,9 +1243,9 @@ function clearRecipe() {
                     </select>
                 </div>
             </td>
-            <td><input type="number" id="price0" onchange="calculateRowCost(0)" oninput="calculateRowCost(0)" placeholder="0.00" step="0.01" readonly /></td>
-            <td><span id="cost0" class="rupee">₹0.00</span></td>
-            <td><button class="btn btn-danger btn-small" onclick="removeIngredient(0)">Remove</button></td>
+            <td><input type="number" id="price0" placeholder="0" step="0.01" readonly /></td>
+            <td><span id="cost0" class="rupee">₹0</span></td>
+            <td><button class="btn btn-danger btn-small" onclick="removeIngredient(0)">×</button></td>
         </tr>
     `;
 
@@ -1367,16 +1253,12 @@ function clearRecipe() {
     calculateTotalCost();
 }
 
-// Enhanced dashboard with average margin and clickable cards
 function updateDashboard() {
     document.getElementById('totalRecipes').textContent = recipes.length;
     document.getElementById('totalIngredients').textContent = ingredients.length;
     document.getElementById('totalSuppliers').textContent = suppliers.length;
 
-    // Calculate business KPIs
     const activeRecipes = recipes.filter(r => r.status === 'active').length;
-
-    // Calculate average margin (not average cost)
     const avgMargin = recipes.length > 0 ? 
         recipes.reduce((sum, r) => sum + r.profitMargin, 0) / recipes.length : 0;
 
@@ -1394,7 +1276,7 @@ function displayRecipesList() {
     const container = document.getElementById('recipesList');
 
     if (recipes.length === 0) {
-        container.innerHTML = '<p>No recipes found. Create your first recipe in the Recipe Costing tab.</p>';
+        container.innerHTML = '<p>No recipes found. Create your first recipe in Recipe Costing.</p>';
         return;
     }
 
@@ -1402,7 +1284,7 @@ function displayRecipesList() {
         `<div class="card recipe-card" onclick="showRecipeDetail(${recipe.id})">
             <h4>${recipe.name}</h4>
             <p><strong>Category:</strong> ${recipe.category}${recipe.subcategory ? ` > ${recipe.subcategory}` : ''}</p>
-            <p><strong>Cost Per Unit:</strong> <span class="rupee">₹${recipe.costPerUnit ? recipe.costPerUnit.toFixed(2) : (recipe.totalCost / (recipe.batchSize || 1)).toFixed(2)}</span> | 
+            <p><strong>Cost/Unit:</strong> <span class="rupee">₹${(recipe.costPerUnit || recipe.totalCost / (recipe.batchSize || 1)).toFixed(2)}</span> | 
                <strong>Price:</strong> <span class="rupee">₹${recipe.suggestedPrice.toFixed(2)}</span> | 
                <strong>Margin:</strong> ${recipe.profitMargin}%</p>
             <p><small>Modified: ${recipe.dateModified || recipe.dateCreated}</small></p>
@@ -1410,7 +1292,6 @@ function displayRecipesList() {
     ).join('');
 }
 
-// Enhanced reports with expandable recipe names (MOVED to All Recipes tab)
 function displaySavedRecipes() {
     const container = document.getElementById('savedRecipesList');
 
@@ -1421,7 +1302,7 @@ function displaySavedRecipes() {
 
     container.innerHTML = recipes.map(recipe => {
         const costPerUnit = recipe.costPerUnit || (recipe.totalCost / (recipe.batchSize || 1));
-        return `<div class="card recipe-card expandable-card" onclick="showRecipeDetail(${recipe.id})">
+        return `<div class="card recipe-card" onclick="showRecipeDetail(${recipe.id})">
             <h4>${recipe.name}</h4>
             <p><strong>Category:</strong> ${recipe.category} | <strong>Margin:</strong> ${recipe.profitMargin}%</p>
             <p><strong>Cost/Unit:</strong> <span class="rupee">₹${costPerUnit.toFixed(2)}</span> | <strong>Price:</strong> <span class="rupee">₹${recipe.suggestedPrice.toFixed(2)}</span></p>
@@ -1433,7 +1314,7 @@ function displayCostAnalysis() {
     const container = document.getElementById('costAnalysis');
 
     if (recipes.length === 0) {
-        container.innerHTML = '<p>Save recipes to see cost analysis.</p>';
+        container.innerHTML = '<p>Save recipes to see analysis.</p>';
         return;
     }
 
@@ -1446,7 +1327,7 @@ function displayCostAnalysis() {
     const avgMargin = recipes.reduce((sum, recipe) => sum + recipe.profitMargin, 0) / totalRecipes;
 
     container.innerHTML = `
-        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="stats-grid">
             <div class="card metric-card">
                 <h4>Avg Cost/Unit</h4>
                 <div class="metric-value" style="font-size: 18px;">₹${avgCost.toFixed(2)}</div>
@@ -1463,7 +1344,6 @@ function displayCostAnalysis() {
     `;
 }
 
-// Show full recipe detail with multi-unit support
 function showRecipeDetail(recipeId) {
     const recipe = recipes.find(r => r.id === recipeId);
     if (!recipe) return;
@@ -1475,10 +1355,10 @@ function showRecipeDetail(recipeId) {
     const content = document.getElementById('recipeDetailContent');
     content.innerHTML = `
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>${recipe.name}</h2>
-                <div>
-                    <button class="btn btn-primary" onclick="editRecipe(${recipe.id})">Edit Recipe</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                <h2 style="margin: 0;">${recipe.name}</h2>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="editRecipe(${recipe.id})">Edit</button>
                     <button class="btn btn-danger" onclick="deleteRecipeConfirm(${recipe.id})">Delete</button>
                 </div>
             </div>
@@ -1490,53 +1370,53 @@ function showRecipeDetail(recipeId) {
                     <p><strong>Version:</strong> ${recipe.version || 1}</p>
                     <p><strong>Batch Size:</strong> ${recipe.batchSize || 1} units</p>
                     <p><strong>Created:</strong> ${recipe.dateCreated}</p>
-                    <p><strong>Last Modified:</strong> ${recipe.dateModified || recipe.dateCreated}</p>
-                    ${recipe.notes ? `<div style="margin-top: 15px;"><strong>Recipe Instructions/Notes:</strong><div style="background: var(--background); padding: 15px; border-radius: var(--radius); margin-top: 5px; white-space: pre-wrap;">${recipe.notes}</div></div>` : ''}
+                    <p><strong>Modified:</strong> ${recipe.dateModified || recipe.dateCreated}</p>
+                    ${recipe.notes ? `<div style="margin-top: 1rem;"><strong>Notes:</strong><div style="background: var(--background); padding: 1rem; border-radius: var(--radius); margin-top: 0.5rem; white-space: pre-wrap;">${recipe.notes}</div></div>` : ''}
                 </div>
 
                 <div class="cost-summary">
                     <h3>Cost Summary</h3>
-                    <div class="cost-item"><span>Ingredient Cost:</span><span class="rupee">₹${recipe.ingredients.reduce((sum, ing) => sum + ing.cost, 0).toFixed(2)}</span></div>
-                    <div class="cost-item"><span>Labor Cost:</span><span class="rupee">₹${((recipe.bakingTime / 60) * recipe.laborRate).toFixed(2)}</span></div>
+                    <div class="cost-item"><span>Ingredients:</span><span class="rupee">₹${recipe.ingredients.reduce((sum, ing) => sum + ing.cost, 0).toFixed(2)}</span></div>
+                    <div class="cost-item"><span>Labor:</span><span class="rupee">₹${((recipe.bakingTime / 60) * recipe.laborRate).toFixed(2)}</span></div>
                     ${recipe.overheadPercentage ? `<div class="cost-item"><span>Overhead (${recipe.overheadPercentage}%):</span><span class="rupee">₹${overheadCostTotal.toFixed(2)}</span></div>` : ''}
-                    <div class="cost-item"><span>Fixed Cost (Total):</span><span class="rupee">₹${(recipe.fixedCost * (recipe.batchSize || 1)).toFixed(2)}</span></div>
-                    <div class="cost-item"><span>Packaging Cost (Total):</span><span class="rupee">₹${(recipe.packagingCost * (recipe.batchSize || 1)).toFixed(2)}</span></div>
-                    <div class="cost-item total"><span>Total Cost:</span><span class="rupee">₹${recipe.totalCost.toFixed(2)}</span></div>
-                    <div class="cost-item"><span>Cost Per Unit:</span><span class="rupee">₹${costPerUnit.toFixed(2)}</span></div>
-                    <div class="suggested-price" style="margin-top: 1rem;">
-                        <strong>Suggested Price Per Unit (${recipe.profitMargin}% margin): <span class="rupee">₹${recipe.suggestedPrice.toFixed(2)}</span></strong>
+                    <div class="cost-item"><span>Fixed (Total):</span><span class="rupee">₹${(recipe.fixedCost * (recipe.batchSize || 1)).toFixed(2)}</span></div>
+                    <div class="cost-item"><span>Packaging (Total):</span><span class="rupee">₹${(recipe.packagingCost * (recipe.batchSize || 1)).toFixed(2)}</span></div>
+                    <div class="cost-item total"><span>TOTAL:</span><span class="rupee">₹${recipe.totalCost.toFixed(2)}</span></div>
+                    <div class="cost-item"><span>Per Unit:</span><span class="rupee">₹${costPerUnit.toFixed(2)}</span></div>
+                    <div class="suggested-price">
+                        <strong>Selling Price (${recipe.profitMargin}%): <span class="rupee">₹${recipe.suggestedPrice.toFixed(2)}</span></strong>
                     </div>
                 </div>
             </div>
 
             <h3>Ingredients</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Ingredient</th>
-                        <th>Supplier</th>
-                        <th>Quantity & Unit</th>
-                        <th>Price per Base Unit</th>
-                        <th>Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${recipe.ingredients.map(ing => `
+            <div class="table-container">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>${ing.name}</td>
-                            <td>${ing.supplierName}</td>
-                            <td>${ing.quantity} ${ing.unit}</td>
-                            <td class="rupee">₹${ing.pricePerBaseUnit.toFixed(2)}</td>
-                            <td class="rupee">₹${ing.cost.toFixed(2)}</td>
+                            <th>Ingredient</th>
+                            <th>Supplier</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Cost</th>
                         </tr>
-                    `).join('')}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        ${recipe.ingredients.map(ing => `
+                            <tr>
+                                <td>${ing.name}</td>
+                                <td>${ing.supplierName}</td>
+                                <td>${ing.quantity} ${ing.unit}</td>
+                                <td class="rupee">₹${ing.pricePerBaseUnit.toFixed(2)}</td>
+                                <td class="rupee">₹${ing.cost.toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
 
             <h3>Production Details</h3>
-            <p><strong>Production Time:</strong> ${recipe.bakingTime} minutes</p>
-            <p><strong>Labor Rate:</strong> <span class="rupee">₹${recipe.laborRate.toFixed(2)}/hour</span></p>
-            ${recipe.overheadPercentage ? `<p><strong>Overhead Percentage:</strong> ${recipe.overheadPercentage}%</p>` : ''}
+            <p><strong>Time:</strong> ${recipe.bakingTime} min | <strong>Labor:</strong> ₹${recipe.laborRate}/hr${recipe.overheadPercentage ? ` | <strong>Overhead:</strong> ${recipe.overheadPercentage}%` : ''}</p>
         </div>
     `;
 
@@ -1547,7 +1427,6 @@ function showRecipeDetail(recipeId) {
 function backToDashboard() {
     document.getElementById('recipeDetail').classList.remove('active');
 
-    // Check if we came from dashboard or recipes
     if (document.getElementById('dashboard').classList.contains('active')) {
         document.getElementById('dashboard').classList.add('active');
     } else {
@@ -1556,10 +1435,9 @@ function backToDashboard() {
 }
 
 function deleteRecipeConfirm(recipeId) {
-    if (confirm('Are you sure you want to delete this recipe?')) {
+    if (confirm('Delete this recipe?')) {
         recipes = recipes.filter(recipe => recipe.id !== recipeId);
 
-        // Go back to previous page
         document.getElementById('recipeDetail').classList.remove('active');
         if (recipes.length === 0) {
             document.getElementById('dashboard').classList.add('active');
@@ -1571,7 +1449,7 @@ function deleteRecipeConfirm(recipeId) {
     }
 }
 
-// Price history and product management
+// Price history
 function showPriceHistory(ingredientId) {
     const ingredient = ingredients.find(ing => ing.id === ingredientId);
     if (!ingredient) return;
@@ -1605,7 +1483,7 @@ function showPriceHistory(ingredientId) {
     });
 
     if (!historyHtml) {
-        historyHtml = '<p>No price history available for this ingredient.</p>';
+        historyHtml = '<p>No price history available.</p>';
     }
 
     content.innerHTML = historyHtml;
@@ -1616,14 +1494,13 @@ function closePriceHistoryModal() {
     document.getElementById('priceHistoryModal').style.display = 'none';
 }
 
-// Product to supplier management
 function addProductToSupplier(supplierId) {
     const availableIngredients = ingredients.filter(ing => 
         !ing.suppliers.some(s => s.supplierId === supplierId)
     );
 
     if (availableIngredients.length === 0) {
-        alert('All available ingredients are already associated with this supplier.');
+        alert('All ingredients already associated');
         return;
     }
 
@@ -1631,20 +1508,14 @@ function addProductToSupplier(supplierId) {
     document.getElementById('modalSupplierId').value = supplierId;
 
     const ingredientSelect = document.getElementById('modalIngredientSelect');
-    ingredientSelect.innerHTML = '<option value="">Select Product</option>';
+    ingredientSelect.innerHTML = '<option value="">Select</option>';
     availableIngredients.forEach(ingredient => {
         const option = document.createElement('option');
         option.value = ingredient.id;
         option.textContent = ingredient.name;
         ingredientSelect.appendChild(option);
-
-        // Update price unit when ingredient is selected
-        option.addEventListener('click', () => {
-            document.getElementById('modalPriceUnit').textContent = ingredient.unit;
-        });
     });
 
-    // Handle ingredient selection change
     ingredientSelect.addEventListener('change', () => {
         const selectedIngredient = ingredients.find(ing => ing.id == ingredientSelect.value);
         if (selectedIngredient) {
@@ -1659,7 +1530,7 @@ function saveProductToSupplier() {
     const price = parseFloat(document.getElementById('modalProductPrice').value);
 
     if (!ingredientId || !price) {
-        alert('Please select a product and enter a price');
+        alert('Please fill all fields');
         return;
     }
 
@@ -1673,10 +1544,9 @@ function saveProductToSupplier() {
         });
 
         closeModal('productSupplierModal');
-        viewSupplierProducts(supplierId); // Refresh the view
-        loadIngredients(); // Refresh ingredient dropdowns
+        viewSupplierProducts(supplierId);
+        loadIngredients();
 
-        // Clear form
         document.getElementById('modalIngredientSelect').value = '';
         document.getElementById('modalProductPrice').value = '';
     }
@@ -1707,32 +1577,29 @@ function saveUpdatedPrice() {
     const supplierData = ingredient.suppliers.find(s => s.supplierId === supplierId);
 
     if (supplierData) {
-        // Add to price history
         supplierData.priceHistory.push({
             price: supplierData.currentPrice,
             date: supplierData.lastUpdated
         });
 
-        // Update current price
         supplierData.currentPrice = newPrice;
         supplierData.lastUpdated = new Date().toISOString().split('T')[0];
 
         closeModal('priceUpdateModal');
-        viewSupplierProducts(supplierId); // Refresh the view
-        loadIngredients(); // Refresh ingredient dropdowns
+        viewSupplierProducts(supplierId);
+        loadIngredients();
 
-        // Clear form
         document.getElementById('currentPriceInput').value = '';
     }
 }
 
 function removeProductFromSupplier(ingredientId, supplierId) {
-    if (confirm('Are you sure you want to remove this product from the supplier?')) {
+    if (confirm('Remove this product?')) {
         const ingredient = ingredients.find(ing => ing.id === ingredientId);
         ingredient.suppliers = ingredient.suppliers.filter(s => s.supplierId !== supplierId);
 
-        viewSupplierProducts(supplierId); // Refresh the view
-        loadIngredients(); // Refresh ingredient dropdowns
+        viewSupplierProducts(supplierId);
+        loadIngredients();
     }
 }
 
@@ -1777,10 +1644,9 @@ function loadDataStats() {
     `;
 }
 
-// Export/Import functions
 function exportData() {
     const data = { 
-        version: '2.2',
+        version: '2.3',
         exportDate: new Date().toISOString(),
         ingredients, 
         recipes, 
@@ -1811,7 +1677,7 @@ function importData(event) {
         try {
             const data = JSON.parse(e.target.result);
             if (data.ingredients && data.recipes && data.categories) {
-                if (confirm('This will replace all current data. Are you sure?')) {
+                if (confirm('This will replace all data. Continue?')) {
                     ingredients = data.ingredients || [];
                     recipes = data.recipes || [];
                     categories = data.categories || [];
@@ -1831,10 +1697,10 @@ function importData(event) {
                     alert('Data imported successfully!');
                 }
             } else {
-                alert('Invalid backup file format');
+                alert('Invalid backup file');
             }
         } catch (error) {
-            alert('Failed to import data: Invalid file format');
+            alert('Failed to import: Invalid file');
         }
     };
     reader.readAsText(file);
@@ -1842,11 +1708,10 @@ function importData(event) {
     event.target.value = '';
 }
 
-// Load supplier dropdowns
 function loadSupplierDropdowns() {
     const supplierSelect = document.getElementById('supplierNameSelect');
     if (supplierSelect) {
-        supplierSelect.innerHTML = '<option value="">Select existing supplier</option>';
+        supplierSelect.innerHTML = '<option value="">Select supplier</option>';
         suppliers.forEach(supplier => {
             const option = document.createElement('option');
             option.value = supplier.id;
@@ -1861,9 +1726,7 @@ function showAlert(alertId) {
     const alert = document.getElementById(alertId);
     if (alert) {
         alert.classList.remove('hidden');
-        setTimeout(() => {
-            alert.classList.add('hidden');
-        }, 3000);
+        setTimeout(() => alert.classList.add('hidden'), 3000);
     }
 }
 
@@ -1871,4 +1734,4 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
 }
 
-console.log('TRUE ORIGIN FOODS - Fixed Multi-Unit Enhanced JavaScript loaded successfully');
+console.log('TRUE ORIGIN FOODS - v2.3 Loaded Successfully');

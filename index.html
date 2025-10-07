@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TRUE ORIGIN FOODS - Baked Foods Division</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
@@ -28,12 +28,11 @@
             --text-primary: #0f172a;
             --text-secondary: #64748b;
             --border-color: #e2e8f0;
-            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --radius: 8px;
             --radius-lg: 12px;
-            --spacing: 1rem;
         }
 
         body {
@@ -42,10 +41,12 @@
             color: var(--text-primary);
             font-size: 14px;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
@@ -69,30 +70,31 @@
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .logo-placeholder {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 16px;
+            flex-shrink: 0;
         }
 
         .company-info h1 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             margin: 0;
             line-height: 1.2;
         }
 
         .company-info p {
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.9;
             margin: 0;
         }
@@ -102,6 +104,7 @@
             gap: 0.5rem;
         }
 
+        /* MOBILE FIX: Horizontal scrollable tabs */
         .nav-tabs {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -110,11 +113,18 @@
             box-shadow: var(--shadow);
             display: flex;
             overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
         }
 
         .tab {
-            flex: 1;
-            min-width: 120px;
+            flex: 0 0 auto;
             padding: 0.75rem 1rem;
             background: transparent;
             border: none;
@@ -149,6 +159,12 @@
 
         .tab-content.active {
             display: block;
+        }
+
+        /* DESKTOP FIX: Compact forms */
+        .content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .page-header {
@@ -190,6 +206,7 @@
             font-size: 14px;
             transition: all 0.2s ease;
             background: var(--surface);
+            font-family: inherit;
         }
 
         .form-group input:focus, 
@@ -209,9 +226,11 @@
         .form-row .form-group {
             margin-bottom: 0;
         }
+
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             padding: 0.75rem 1rem;
             border: none;
@@ -222,6 +241,7 @@
             text-decoration: none;
             transition: all 0.2s ease;
             line-height: 1;
+            font-family: inherit;
         }
 
         .btn:hover {
@@ -262,14 +282,15 @@
             color: white;
         }
 
+        /* MOBILE FIX: White settings icon */
         .btn-outline {
             background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
         }
 
         .btn-outline:hover {
-            background: var(--border-color);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-small {
@@ -303,11 +324,14 @@
 
         .card:hover {
             box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
         }
 
         .card.clickable {
             cursor: pointer;
+        }
+
+        .card.clickable:hover {
+            transform: translateY(-2px);
         }
 
         .card h3 {
@@ -352,11 +376,16 @@
             margin: 1.5rem 0;
         }
 
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
             font-size: 13px;
+            min-width: 600px;
         }
 
         .table th, 
@@ -446,9 +475,8 @@
             color: #92400e;
         }
 
-        .recipe-card, 
-        .supplier-card, 
-        .ingredient-card {
+        /* MOBILE FIX: Recipe cards with word wrapping */
+        .recipe-card {
             transition: all 0.2s ease;
             cursor: pointer;
             border: 1px solid var(--border-color);
@@ -459,6 +487,18 @@
             box-shadow: var(--shadow-md);
         }
 
+        .recipe-card h4 {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .recipe-card p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            font-size: 13px;
+        }
+
         .supplier-card {
             border-left: 4px solid var(--primary-color);
         }
@@ -467,7 +507,6 @@
             border-left: 4px solid var(--success-color);
         }
 
-        /* Sleek expandable lists */
         .sleek-list {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -539,6 +578,7 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0.75rem;
+            cursor: pointer;
         }
 
         .item-info {
@@ -547,11 +587,21 @@
             line-height: 1.5;
         }
 
+        .item-info p {
+            margin: 0.25rem 0;
+        }
+
         .item-actions {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
             margin-top: 0.75rem;
+        }
+
+        .ingredient-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
         }
 
         .category-item {
@@ -613,6 +663,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
+            overflow-y: auto;
         }
 
         .modal-content {
@@ -793,25 +844,51 @@
             display: none !important;
         }
 
+        /* Mobile optimizations */
         @media (max-width: 768px) {
             .container {
                 padding: 0 0.75rem;
             }
 
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+            .header {
+                padding: 0.75rem 0;
+            }
+
+            .logo-placeholder {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .company-info h1 {
+                font-size: 14px;
+            }
+
+            .company-info p {
+                font-size: 10px;
             }
 
             .nav-tabs {
-                flex-direction: column;
-                padding: 0.5rem;
+                margin: 0.75rem 0;
+                padding: 0.25rem;
             }
 
             .tab {
-                min-width: auto;
-                text-align: center;
+                padding: 0.65rem 0.85rem;
+                font-size: 12px;
+            }
+
+            .tab-content {
+                padding: 1rem;
+                margin: 0.75rem 0;
+            }
+
+            .page-title {
+                font-size: 18px;
+            }
+
+            .page-subtitle {
+                font-size: 12px;
             }
 
             .grid-2,
@@ -855,7 +932,27 @@
             }
 
             .unit-input-group {
+                flex-direction: row;
+            }
+
+            .item-actions {
                 flex-direction: column;
+            }
+
+            .item-actions .btn {
+                width: 100%;
+            }
+
+            .recipe-card {
+                width: 100%;
+            }
+
+            .recipe-card h4 {
+                font-size: 14px;
+            }
+
+            .recipe-card p {
+                font-size: 12px;
             }
         }
 
@@ -864,33 +961,40 @@
                 grid-template-columns: 1fr;
             }
 
-            .item-actions {
-                flex-direction: column;
+            .company-info p {
+                display: none;
+            }
+        }
+
+        /* Desktop optimizations */
+        @media (min-width: 769px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .btn {
-                justify-content: center;
+            .tab-content {
+                padding: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
+    <!-- Login Screen - NO AUTO-FILL -->
     <div id="loginScreen" class="login-container">
         <div class="login-logo">TO</div>
         <h2 class="login-title">TRUE ORIGIN FOODS</h2>
         <p class="login-subtitle">Baked Foods Division - Cost Calculator</p>
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" value="admin" />
+            <input type="text" id="username" placeholder="Enter username" autocomplete="off" />
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" value="admin123" />
+            <input type="password" id="password" placeholder="Enter password" autocomplete="new-password" />
         </div>
         <button class="btn btn-primary btn-large" onclick="login()">Login</button>
         <div id="loginError" class="alert alert-danger hidden">
-            Invalid credentials. Default: admin/admin123
+            Invalid credentials. Please try again.
         </div>
     </div>
 
@@ -907,7 +1011,7 @@
                         </div>
                     </div>
                     <div class="header-actions">
-                        <button class="btn btn-outline btn-small" onclick="openPasswordModal()">Settings</button>
+                        <button class="btn btn-outline btn-small" onclick="openPasswordModal()">⚙️</button>
                         <button class="btn btn-secondary btn-small" onclick="logout()">Logout</button>
                     </div>
                 </div>
@@ -915,7 +1019,7 @@
         </div>
 
         <div class="container">
-            <!-- Navigation Tabs -->
+            <!-- Navigation Tabs - FIXED: Horizontal scrollable -->
             <div class="nav-tabs">
                 <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
                 <button class="tab" onclick="showTab('costing')">Recipe Costing</button>
@@ -928,384 +1032,365 @@
 
             <!-- Dashboard Tab -->
             <div id="dashboard" class="tab-content active">
-                <div class="page-header">
-                    <h1 class="page-title">Dashboard</h1>
-                    <p class="page-subtitle">Overview of your bakery operations and performance metrics</p>
-                </div>
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">Dashboard</h1>
+                        <p class="page-subtitle">Overview of your bakery operations</p>
+                    </div>
 
-                <div class="stats-grid">
-                    <div class="card metric-card clickable" onclick="showTab('recipes')">
-                        <h3>📋 Recipes</h3>
-                        <div class="metric-value" id="totalRecipes">0</div>
-                        <p class="metric-label"><span id="activeRecipes">0</span> active recipes</p>
+                    <div class="stats-grid">
+                        <div class="card metric-card clickable" onclick="showTab('recipes')">
+                            <h3>📋 Recipes</h3>
+                            <div class="metric-value" id="totalRecipes">0</div>
+                            <p class="metric-label"><span id="activeRecipes">0</span> active</p>
+                        </div>
+                        <div class="card metric-card clickable" onclick="showTab('ingredients')">
+                            <h3>🥄 Ingredients</h3>
+                            <div class="metric-value" id="totalIngredients">0</div>
+                            <p class="metric-label">ingredients</p>
+                        </div>
+                        <div class="card metric-card clickable" onclick="showTab('suppliers')">
+                            <h3>🏢 Suppliers</h3>
+                            <div class="metric-value" id="totalSuppliers">0</div>
+                            <p class="metric-label">suppliers</p>
+                        </div>
+                        <div class="card metric-card">
+                            <h3>💰 Avg Margin</h3>
+                            <div class="metric-value" id="avgMargin">0%</div>
+                            <p class="metric-label">profit</p>
+                        </div>
                     </div>
-                    <div class="card metric-card clickable" onclick="showTab('ingredients')">
-                        <h3>🥄 Ingredients</h3>
-                        <div class="metric-value" id="totalIngredients">0</div>
-                        <p class="metric-label">managed ingredients</p>
-                    </div>
-                    <div class="card metric-card clickable" onclick="showTab('suppliers')">
-                        <h3>🏢 Suppliers</h3>
-                        <div class="metric-value" id="totalSuppliers">0</div>
-                        <p class="metric-label">active suppliers</p>
-                    </div>
-                    <div class="card metric-card">
-                        <h3>💰 Avg Margin</h3>
-                        <div class="metric-value" id="avgMargin">0%</div>
-                        <p class="metric-label">profit margin</p>
-                    </div>
-                </div>
 
-                <div class="card">
-                    <h3>Recent Recipes</h3>
-                    <div id="recipesList">
-                        <p>No recipes found. Create your first recipe in the Recipe Costing tab.</p>
+                    <div class="card">
+                        <h3>Recent Recipes</h3>
+                        <div id="recipesList">
+                            <p>No recipes found. Create your first recipe in the Recipe Costing tab.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Recipe Detail View -->
             <div id="recipeDetail" class="tab-content">
-                <button class="btn btn-outline btn-small" onclick="backToDashboard()">← Back to Dashboard</button>
-                <div id="recipeDetailContent">
-                    <!-- Recipe details will be populated here -->
+                <div class="content-wrapper">
+                    <button class="btn btn-outline btn-small" style="color: var(--text-primary); border-color: var(--border-color); margin-bottom: 1rem;" onclick="backToDashboard()">← Back</button>
+                    <div id="recipeDetailContent"></div>
                 </div>
             </div>
 
             <!-- Recipe Costing Tab -->
             <div id="costing" class="tab-content">
-                <div class="page-header">
-                    <h1 class="page-title">Recipe & Cost Calculator</h1>
-                    <p class="page-subtitle">Create and manage your bakery recipes with accurate cost calculations</p>
-                </div>
-
-                <div id="editingRecipe" class="alert alert-info hidden">
-                    <p>Editing Recipe: <span id="editingRecipeName"></span></p>
-                    <button class="btn btn-secondary btn-small" onclick="cancelEdit()">Cancel Edit</button>
-                </div>
-
-                <div class="grid grid-2">
-                    <div>
-                        <div class="form-group">
-                            <label for="recipeName">Recipe Name:</label>
-                            <input type="text" id="recipeName" placeholder="Enter recipe name" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="recipeCategory">Category:</label>
-                            <select id="recipeCategory">
-                                <!-- Categories will be populated dynamically -->
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="recipeSubcategory">Subcategory:</label>
-                            <select id="recipeSubcategory">
-                                <option value="">Select subcategory (optional)</option>
-                            </select>
-                        </div>
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">Recipe & Cost Calculator</h1>
+                        <p class="page-subtitle">Create accurate recipe costings</p>
                     </div>
 
-                    <div>
-                        <div class="form-group">
-                            <label for="batchSize">Batch Size (units):</label>
-                            <input type="number" id="batchSize" onchange="calculateTotalCost()" oninput="calculateTotalCost()" value="1" min="1" />
+                    <div id="editingRecipe" class="alert alert-info hidden">
+                        <p>Editing Recipe: <span id="editingRecipeName"></span></p>
+                        <button class="btn btn-secondary btn-small" onclick="cancelEdit()">Cancel Edit</button>
+                    </div>
+
+                    <div class="grid grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label for="recipeName">Recipe Name:</label>
+                                <input type="text" id="recipeName" placeholder="Enter recipe name" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="recipeCategory">Category:</label>
+                                <select id="recipeCategory"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="recipeSubcategory">Subcategory:</label>
+                                <select id="recipeSubcategory">
+                                    <option value="">Select subcategory (optional)</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="overheadPercentage">Overhead Percentage (%):</label>
-                            <input type="number" id="overheadPercentage" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="15" step="0.1" />
-                            <div class="overhead-info">
-                                <strong>Overhead:</strong> Indirect costs like rent, utilities as % of direct costs
+                        <div>
+                            <div class="form-group">
+                                <label for="batchSize">Batch Size (units):</label>
+                                <input type="number" id="batchSize" onchange="calculateTotalCost()" oninput="calculateTotalCost()" value="1" min="1" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="overheadPercentage">Overhead (%):</label>
+                                <input type="number" id="overheadPercentage" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="15" step="0.1" />
+                                <div class="overhead-info">Indirect costs (rent, utilities)</div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="recipeNotes">Recipe Instructions/Notes:</label>
-                    <textarea id="recipeNotes" rows="3" placeholder="Enter baking instructions, notes, or special requirements"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="recipeNotes">Recipe Instructions/Notes:</label>
+                        <textarea id="recipeNotes" rows="3" placeholder="Enter baking instructions"></textarea>
+                    </div>
 
-                <!-- Ingredients Section -->
-                <h3>Ingredients</h3>
-                <table class="table" id="ingredientsTable">
-                    <thead>
-                        <tr>
-                            <th>Ingredient</th>
-                            <th>Supplier</th>
-                            <th>Quantity & Unit</th>
-                            <th>Price/Base Unit</th>
-                            <th>Cost</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="ingredientRow0">
-                            <td>
-                                <select id="ingredient0" onchange="updateIngredientSuppliers(0)">
-                                    <option value="">Select ingredient</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="supplier0" onchange="updateSupplierPrice(0)">
-                                    <option value="">Select supplier</option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="unit-input-group">
-                                    <input type="number" id="quantity0" onchange="calculateRowCost(0)" oninput="calculateRowCost(0)" placeholder="0" min="0" step="0.1" />
-                                    <select id="unit0" onchange="calculateRowCost(0)">
-                                        <option value="g">g</option>
-                                        <option value="ml">ml</option>
-                                        <option value="pcs">pcs</option>
-                                    </select>
+                    <h3>Ingredients</h3>
+                    <div class="table-container">
+                        <table class="table" id="ingredientsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ingredient</th>
+                                    <th>Supplier</th>
+                                    <th>Quantity & Unit</th>
+                                    <th>Price/Unit</th>
+                                    <th>Cost</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="ingredientRow0">
+                                    <td><select id="ingredient0" onchange="updateIngredientSuppliers(0)"><option value="">Select</option></select></td>
+                                    <td><select id="supplier0" onchange="updateSupplierPrice(0)"><option value="">Select</option></select></td>
+                                    <td>
+                                        <div class="unit-input-group">
+                                            <input type="number" id="quantity0" onchange="calculateRowCost(0)" oninput="calculateRowCost(0)" placeholder="0" min="0" step="0.1" />
+                                            <select id="unit0" onchange="calculateRowCost(0)">
+                                                <option value="g">g</option>
+                                                <option value="ml">ml</option>
+                                                <option value="pcs">pcs</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td><input type="number" id="price0" placeholder="0" step="0.01" readonly /></td>
+                                    <td><span id="cost0" class="rupee">₹0</span></td>
+                                    <td><button class="btn btn-danger btn-small" onclick="removeIngredient(0)">×</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-primary" onclick="addIngredient()">+ Add Ingredient</button>
+
+                    <div class="grid grid-2">
+                        <div>
+                            <h3>Production Details</h3>
+                            <div class="form-group">
+                                <label for="bakingTime">Production Time (min):</label>
+                                <input type="number" id="bakingTime" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="0" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="laborRate">Labor Cost/Hour (₹):</label>
+                                <input type="number" id="laborRate" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="200" step="0.01" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fixedCost">Fixed Cost/Unit (₹):</label>
+                                <input type="number" id="fixedCost" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="10" step="0.01" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="packagingCost">Packaging/Unit (₹):</label>
+                                <input type="number" id="packagingCost" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="15" step="0.01" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="cost-summary">
+                                <h3>Cost Summary (Batch: <span id="batchSizeDisplay">1</span>)</h3>
+                                <div class="cost-item">
+                                    <span>Ingredients:</span>
+                                    <span id="totalIngredientCost" class="rupee">₹0</span>
                                 </div>
-                            </td>
-                            <td><input type="number" id="price0" onchange="calculateRowCost(0)" oninput="calculateRowCost(0)" placeholder="0.00" step="0.01" readonly /></td>
-                            <td><span id="cost0" class="rupee">₹0.00</span></td>
-                            <td><button class="btn btn-danger btn-small" onclick="removeIngredient(0)">Remove</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-primary" onclick="addIngredient()">Add Ingredient</button>
-
-                <!-- Cost Breakdown -->
-                <div class="grid grid-2">
-                    <div>
-                        <h3>Production Details</h3>
-                        <div class="form-group">
-                            <label for="bakingTime">Production Time (minutes):</label>
-                            <input type="number" id="bakingTime" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="0" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="laborRate">Labor Cost/Hour (₹):</label>
-                            <input type="number" id="laborRate" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="200" step="0.01" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fixedCost">Fixed Cost/Product (₹):</label>
-                            <input type="number" id="fixedCost" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="10" step="0.01" />
-                            <div class="overhead-info">
-                                <strong>Fixed Cost:</strong> Direct costs per unit (packaging, labels, etc.)
+                                <div class="cost-item">
+                                    <span>Labor:</span>
+                                    <span id="totalLaborCost" class="rupee">₹0</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span>Overhead:</span>
+                                    <span id="displayOverheadCost" class="rupee">₹0</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span>Fixed (Total):</span>
+                                    <span id="displayFixedCost" class="rupee">₹0</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span>Packaging (Total):</span>
+                                    <span id="displayPackagingCost" class="rupee">₹0</span>
+                                </div>
+                                <div class="cost-item total">
+                                    <span>TOTAL:</span>
+                                    <span id="grandTotalCost" class="rupee">₹0</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span>Per Unit:</span>
+                                    <span id="costPerUnit" class="rupee">₹0</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="packagingCost">Packaging Cost/Product (₹):</label>
-                            <input type="number" id="packagingCost" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="15" step="0.01" />
+                            <div class="form-group">
+                                <label for="profitMargin">Profit Margin (%):</label>
+                                <input type="number" id="profitMargin" onchange="calculateTotalCost()" oninput="calculateTotalCost()" value="40" step="0.1" />
+                            </div>
+
+                            <div class="suggested-price">
+                                Selling Price/Unit: <span id="suggestedPrice" class="rupee">₹0</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div>
-                        <div class="cost-summary">
-                            <h3>Cost Summary (Per Batch of <span id="batchSizeDisplay">1</span>)</h3>
-                            <div class="cost-item">
-                                <span>Ingredient Cost:</span>
-                                <span id="totalIngredientCost" class="rupee">₹0.00</span>
-                            </div>
-                            <div class="cost-item">
-                                <span>Labor Cost:</span>
-                                <span id="totalLaborCost" class="rupee">₹0.00</span>
-                            </div>
-                            <div class="cost-item">
-                                <span>Overhead Cost:</span>
-                                <span id="displayOverheadCost" class="rupee">₹0.00</span>
-                            </div>
-                            <div class="cost-item">
-                                <span>Fixed Cost (Total):</span>
-                                <span id="displayFixedCost" class="rupee">₹0.00</span>
-                            </div>
-                            <div class="cost-item">
-                                <span>Packaging Cost (Total):</span>
-                                <span id="displayPackagingCost" class="rupee">₹0.00</span>
-                            </div>
-                            <div class="cost-item total">
-                                <span>TOTAL BATCH COST:</span>
-                                <span id="grandTotalCost" class="rupee">₹0.00</span>
-                            </div>
-                            <div class="cost-item">
-                                <span>Cost Per Unit:</span>
-                                <span id="costPerUnit" class="rupee">₹0.00</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="profitMargin">Profit Margin (%):</label>
-                            <input type="number" id="profitMargin" onchange="calculateTotalCost()" oninput="calculateTotalCost()" value="40" step="0.1" />
-                        </div>
-
-                        <div class="suggested-price">
-                            Suggested Selling Price (Per Unit): <span id="suggestedPrice" class="rupee">₹0.00</span>
-                        </div>
+                    <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+                        <button class="btn btn-primary btn-large" onclick="saveRecipe()">Save Recipe</button>
+                        <button class="btn btn-outline" style="color: var(--text-primary); border-color: var(--border-color);" onclick="clearRecipe()">Clear</button>
                     </div>
-                </div>
 
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button class="btn btn-primary btn-large" onclick="saveRecipe()">Save Recipe</button>
-                    <button class="btn btn-outline" onclick="clearRecipe()">Clear Form</button>
-                </div>
-
-                <div id="recipeAlert" class="alert alert-success hidden">
-                    Recipe saved successfully!
+                    <div id="recipeAlert" class="alert alert-success hidden">Recipe saved!</div>
                 </div>
             </div>
 
             <!-- Ingredients Tab -->
             <div id="ingredients" class="tab-content">
-                <div class="page-header">
-                    <h1 class="page-title">Ingredient Management</h1>
-                    <p class="page-subtitle">Manage your ingredients, units, and supplier pricing</p>
-                </div>
-
-                <div class="card">
-                    <h3>Add New Ingredient</h3>
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 2;">
-                            <label for="newIngredientName">Ingredient Name:</label>
-                            <input type="text" id="newIngredientName" placeholder="Enter ingredient name" />
-                        </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label for="newIngredientUnit">Primary Unit:</label>
-                            <select id="newIngredientUnit">
-                                <option value="kg">kg (kilograms)</option>
-                                <option value="ltr">ltr (liters)</option>
-                                <option value="pcs">pcs (pieces)</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="addIngredientToMaster()">Add Ingredient</button>
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">Ingredient Management</h1>
+                        <p class="page-subtitle">Manage ingredients and pricing</p>
                     </div>
-                </div>
 
-                <div id="ingredientAlert" class="alert alert-success hidden">
-                    Ingredient added successfully!
-                </div>
+                    <div class="card">
+                        <h3>Add New Ingredient</h3>
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 2;">
+                                <label for="newIngredientName">Name:</label>
+                                <input type="text" id="newIngredientName" placeholder="Enter name" />
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="newIngredientUnit">Unit:</label>
+                                <select id="newIngredientUnit">
+                                    <option value="kg">kg</option>
+                                    <option value="ltr">ltr</option>
+                                    <option value="pcs">pcs</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="addIngredientToMaster()">Add</button>
+                        </div>
+                    </div>
 
-                <h3>Current Ingredients</h3>
-                <div id="ingredientsList">
-                    <!-- Ingredients will be populated here -->
+                    <div id="ingredientAlert" class="alert alert-success hidden">Ingredient added!</div>
+
+                    <h3>Current Ingredients</h3>
+                    <div id="ingredientsList"></div>
                 </div>
             </div>
 
             <!-- Suppliers Tab -->
             <div id="suppliers" class="tab-content">
-                <div class="page-header">
-                    <h1 class="page-title">Supplier Management</h1>
-                    <p class="page-subtitle">Manage your supplier relationships and pricing</p>
-                </div>
-
-                <div class="card">
-                    <h3>Add New Supplier</h3>
-                    <div class="grid grid-3">
-                        <div class="form-group">
-                            <label for="newSupplierName">Supplier Name:</label>
-                            <input type="text" id="newSupplierName" placeholder="Enter supplier name" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="newSupplierContact">Contact:</label>
-                            <input type="text" id="newSupplierContact" placeholder="Enter contact number" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="newSupplierEmail">Email:</label>
-                            <input type="email" id="newSupplierEmail" placeholder="Enter email address" />
-                        </div>
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">Supplier Management</h1>
+                        <p class="page-subtitle">Manage supplier relationships</p>
                     </div>
 
-                    <div class="form-group">
-                        <label for="newSupplierCreditDays">Credit Days:</label>
-                        <input type="number" id="newSupplierCreditDays" placeholder="30" min="0" />
+                    <div class="card">
+                        <h3>Add New Supplier</h3>
+                        <div class="grid grid-3">
+                            <div class="form-group">
+                                <label for="newSupplierName">Name:</label>
+                                <input type="text" id="newSupplierName" placeholder="Supplier name" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newSupplierContact">Contact:</label>
+                                <input type="text" id="newSupplierContact" placeholder="Phone" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newSupplierEmail">Email:</label>
+                                <input type="email" id="newSupplierEmail" placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newSupplierCreditDays">Credit Days:</label>
+                            <input type="number" id="newSupplierCreditDays" placeholder="30" min="0" />
+                        </div>
+
+                        <button class="btn btn-primary" onclick="addNewSupplier()">Add Supplier</button>
                     </div>
 
-                    <button class="btn btn-primary" onclick="addNewSupplier()">Add Supplier</button>
-                </div>
+                    <div id="supplierAlert" class="alert alert-success hidden">Supplier added!</div>
 
-                <div id="supplierAlert" class="alert alert-success hidden">
-                    Supplier added successfully!
-                </div>
-
-                <h3>Current Suppliers</h3>
-                <div id="suppliersList">
-                    <!-- Suppliers will be populated here -->
+                    <h3>Current Suppliers</h3>
+                    <div id="suppliersList"></div>
                 </div>
             </div>
 
             <!-- Supplier Detail View -->
             <div id="supplierDetail" class="tab-content">
-                <button class="btn btn-outline btn-small" onclick="backToSuppliers()">← Back to Suppliers</button>
-                <div id="supplierDetailContent">
-                    <!-- Supplier details will be populated here -->
+                <div class="content-wrapper">
+                    <button class="btn btn-outline btn-small" style="color: var(--text-primary); border-color: var(--border-color); margin-bottom: 1rem;" onclick="backToSuppliers()">← Back</button>
+                    <div id="supplierDetailContent"></div>
                 </div>
             </div>
 
             <!-- Categories Tab -->
             <div id="categories" class="tab-content">
-                <div class="page-header">
-                    <h1 class="page-title">Category Management</h1>
-                    <p class="page-subtitle">Organize your products and set default profit margins</p>
-                </div>
-
-                <div class="grid grid-2">
-                    <div class="card">
-                        <h3>Add New Category</h3>
-                        <div class="form-group">
-                            <label for="newCategoryName">Category Name:</label>
-                            <input type="text" id="newCategoryName" placeholder="Enter category name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="newCategoryMargin">Default Margin (%):</label>
-                            <input type="number" id="newCategoryMargin" placeholder="40" step="0.1" min="10" max="80" />
-                        </div>
-                        <button class="btn btn-primary" onclick="addCategory()">Add Category</button>
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">Category Management</h1>
+                        <p class="page-subtitle">Organize products & set margins</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Add Subcategory</h3>
-                        <div class="form-group">
-                            <label for="parentCategory">Parent Category:</label>
-                            <select id="parentCategory">
-                                <!-- Will be populated dynamically -->
-                            </select>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3>Add Category</h3>
+                            <div class="form-group">
+                                <label for="newCategoryName">Name:</label>
+                                <input type="text" id="newCategoryName" placeholder="Category name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newCategoryMargin">Margin (%):</label>
+                                <input type="number" id="newCategoryMargin" placeholder="40" step="0.1" />
+                            </div>
+                            <button class="btn btn-primary" onclick="addCategory()">Add</button>
                         </div>
-                        <div class="form-group">
-                            <label for="newSubcategoryName">Subcategory Name:</label>
-                            <input type="text" id="newSubcategoryName" placeholder="Enter subcategory name" />
+
+                        <div class="card">
+                            <h3>Add Subcategory</h3>
+                            <div class="form-group">
+                                <label for="parentCategory">Parent:</label>
+                                <select id="parentCategory"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="newSubcategoryName">Name:</label>
+                                <input type="text" id="newSubcategoryName" placeholder="Subcategory" />
+                            </div>
+                            <button class="btn btn-primary" onclick="addSubcategory()">Add</button>
                         </div>
-                        <button class="btn btn-primary" onclick="addSubcategory()">Add Subcategory</button>
                     </div>
-                </div>
 
-                <div id="categoryAlert" class="alert alert-success hidden">
-                    Category updated successfully!
-                </div>
+                    <div id="categoryAlert" class="alert alert-success hidden">Category updated!</div>
 
-                <h3>Current Categories</h3>
-                <div id="categoriesList">
-                    <!-- Categories will be populated here -->
+                    <h3>Current Categories</h3>
+                    <div id="categoriesList"></div>
                 </div>
             </div>
 
             <!-- All Recipes Tab -->
             <div id="recipes" class="tab-content">
-                <div class="page-header">
-                    <h1 class="page-title">All Recipes</h1>
-                    <p class="page-subtitle">View and manage all your saved recipes</p>
-                </div>
-
-                <div class="grid grid-2">
-                    <div class="card">
-                        <h3>Recipe Summary</h3>
-                        <div id="savedRecipesList">
-                            <p>No recipes saved yet.</p>
-                        </div>
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">All Recipes</h1>
+                        <p class="page-subtitle">View and manage saved recipes</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Cost Analysis</h3>
-                        <div id="costAnalysis">
-                            <p>Save recipes to see cost analysis.</p>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3>Recipe Summary</h3>
+                            <div id="savedRecipesList">
+                                <p>No recipes saved yet.</p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3>Cost Analysis</h3>
+                            <div id="costAnalysis">
+                                <p>Save recipes to see analysis.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1313,38 +1398,37 @@
 
             <!-- Settings Tab -->
             <div id="settings" class="tab-content">
-                <div class="page-header">
-                    <h1 class="page-title">Data Management</h1>
-                    <p class="page-subtitle">Backup and restore your business data</p>
-                </div>
-
-                <div class="card">
-                    <h3>🔒 Data Backup & Security</h3>
-                    <p>Your data is stored securely on your device using browser storage. Regular backups are recommended.</p>
-
-                    <div style="display: flex; gap: 1rem; margin: 1.5rem 0;">
-                        <button class="btn btn-success" onclick="exportData()">📥 Export All Data</button>
-                        <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
-                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)" />
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h1 class="page-title">Data Management</h1>
+                        <p class="page-subtitle">Backup and restore data</p>
                     </div>
 
-                    <div class="alert alert-info">
-                        <strong>Backup Recommended:</strong> Export your data regularly and store the backup file safely. 
-                        This protects against data loss if you clear browser data or change devices.
-                    </div>
-                </div>
+                    <div class="card">
+                        <h3>🔒 Data Backup</h3>
+                        <p>Export/import your business data safely.</p>
 
-                <div class="card">
-                    <h3>Data Statistics</h3>
-                    <div id="dataStats">
-                        <!-- Statistics will be populated here -->
+                        <div style="display: flex; gap: 0.75rem; margin: 1.5rem 0;">
+                            <button class="btn btn-success" onclick="exportData()">📥 Export</button>
+                            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import</button>
+                            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)" />
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>Backup Recommended:</strong> Export regularly and store safely.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Data Statistics</h3>
+                        <div id="dataStats"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- All Modals (Password, Supplier Edit, etc.) -->
+    <!-- All Modals -->
     <div id="passwordModal" class="modal">
         <div class="modal-content">
             <button class="close" onclick="closePasswordModal()">×</button>
@@ -1352,21 +1436,19 @@
                 <h3 class="modal-title">Change Password</h3>
             </div>
             <div class="form-group">
-                <label for="currentPassword">Current Password:</label>
+                <label for="currentPassword">Current:</label>
                 <input type="password" id="currentPassword" />
             </div>
             <div class="form-group">
-                <label for="newPassword">New Password:</label>
+                <label for="newPassword">New:</label>
                 <input type="password" id="newPassword" />
             </div>
             <div class="form-group">
-                <label for="confirmPassword">Confirm New Password:</label>
+                <label for="confirmPassword">Confirm:</label>
                 <input type="password" id="confirmPassword" />
             </div>
             <button class="btn btn-primary" onclick="changePassword()">Change Password</button>
-            <div id="passwordAlert" class="alert alert-danger hidden">
-                <!-- Password change messages -->
-            </div>
+            <div id="passwordAlert" class="alert alert-danger hidden"></div>
         </div>
     </div>
 
@@ -1378,7 +1460,7 @@
             </div>
             <input type="hidden" id="editingSupplierId" />
             <div class="form-group">
-                <label for="editSupplierName">Supplier Name:</label>
+                <label for="editSupplierName">Name:</label>
                 <input type="text" id="editSupplierName" />
             </div>
             <div class="form-group">
@@ -1393,7 +1475,7 @@
                 <label for="editSupplierCreditDays">Credit Days:</label>
                 <input type="number" id="editSupplierCreditDays" min="0" />
             </div>
-            <button class="btn btn-primary" onclick="saveSupplierEdit()">Save Changes</button>
+            <button class="btn btn-primary" onclick="saveSupplierEdit()">Save</button>
         </div>
     </div>
 
@@ -1408,17 +1490,15 @@
             <div class="form-group">
                 <label for="supplierNameSelect">Supplier:</label>
                 <select id="supplierNameSelect">
-                    <option value="">Select existing supplier</option>
+                    <option value="">Select supplier</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="supplierPrice">Price per <span id="supplierPriceUnit">unit</span> (₹):</label>
                 <input type="number" id="supplierPrice" placeholder="0.00" step="0.01" />
             </div>
-            <button class="btn btn-primary" onclick="saveSupplier()">Save Supplier</button>
-            <div id="supplierModalAlert" class="alert alert-success hidden">
-                Supplier saved successfully!
-            </div>
+            <button class="btn btn-primary" onclick="saveSupplier()">Save</button>
+            <div id="supplierModalAlert" class="alert alert-success hidden">Saved!</div>
         </div>
     </div>
 
@@ -1428,9 +1508,7 @@
             <div class="modal-header">
                 <h3 class="modal-title" id="priceHistoryTitle">Price History</h3>
             </div>
-            <div id="priceHistoryContent">
-                <!-- Price history will be populated here -->
-            </div>
+            <div id="priceHistoryContent"></div>
         </div>
     </div>
 
@@ -1438,20 +1516,20 @@
         <div class="modal-content">
             <button class="close" onclick="closeModal('productSupplierModal')">×</button>
             <div class="modal-header">
-                <h3 class="modal-title">Add Product to Supplier</h3>
+                <h3 class="modal-title">Add Product</h3>
             </div>
             <input type="hidden" id="modalSupplierId" />
             <div class="form-group">
-                <label for="modalIngredientSelect">Select Product:</label>
+                <label for="modalIngredientSelect">Product:</label>
                 <select id="modalIngredientSelect">
-                    <option value="">Select Product</option>
+                    <option value="">Select</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="modalProductPrice">Price per <span id="modalPriceUnit">unit</span> (₹):</label>
                 <input type="number" id="modalProductPrice" placeholder="0.00" step="0.01" />
             </div>
-            <button class="btn btn-primary" onclick="saveProductToSupplier()">Add Product</button>
+            <button class="btn btn-primary" onclick="saveProductToSupplier()">Add</button>
         </div>
     </div>
 
@@ -1459,15 +1537,15 @@
         <div class="modal-content">
             <button class="close" onclick="closeModal('priceUpdateModal')">×</button>
             <div class="modal-header">
-                <h3 class="modal-title">Update Product Price</h3>
+                <h3 class="modal-title">Update Price</h3>
             </div>
             <input type="hidden" id="updateIngredientId" />
             <input type="hidden" id="updateSupplierId" />
             <div class="form-group">
-                <label for="currentPriceInput">New Price per <span id="updatePriceUnit">unit</span> (₹):</label>
+                <label for="currentPriceInput">New price per <span id="updatePriceUnit">unit</span> (₹):</label>
                 <input type="number" id="currentPriceInput" placeholder="0.00" step="0.01" />
             </div>
-            <button class="btn btn-primary" onclick="saveUpdatedPrice()">Update Price</button>
+            <button class="btn btn-primary" onclick="saveUpdatedPrice()">Update</button>
         </div>
     </div>
 
