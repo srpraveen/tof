@@ -14,7 +14,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         :root {
             --primary-color: #2563eb;
             --primary-dark: #1d4ed8;
@@ -34,7 +34,7 @@
             --radius: 8px;
             --radius-lg: 12px;
         }
-
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: var(--background);
@@ -44,13 +44,13 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
-
+        
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
@@ -60,19 +60,19 @@
             top: 0;
             z-index: 100;
         }
-
+        
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
+        
         .logo-section {
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
-
+        
         .logo-placeholder {
             width: 40px;
             height: 40px;
@@ -85,26 +85,25 @@
             font-size: 16px;
             flex-shrink: 0;
         }
-
+        
         .company-info h1 {
             font-size: 16px;
             font-weight: 700;
             margin: 0;
             line-height: 1.2;
         }
-
+        
         .company-info p {
             font-size: 11px;
             opacity: 0.9;
             margin: 0;
         }
-
+        
         .header-actions {
             display: flex;
             gap: 0.5rem;
         }
-
-        /* MOBILE FIX: Horizontal scrollable tabs */
+        
         .nav-tabs {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -118,11 +117,11 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-
+        
         .nav-tabs::-webkit-scrollbar {
             display: none;
         }
-
+        
         .tab {
             flex: 0 0 auto;
             padding: 0.75rem 1rem;
@@ -136,18 +135,18 @@
             color: var(--text-secondary);
             white-space: nowrap;
         }
-
+        
         .tab.active {
             background: var(--primary-color);
             color: white;
             box-shadow: var(--shadow);
         }
-
+        
         .tab:hover:not(.active) {
             background: var(--border-color);
             color: var(--text-primary);
         }
-
+        
         .tab-content {
             display: none;
             background: var(--surface);
@@ -156,38 +155,53 @@
             box-shadow: var(--shadow);
             margin: 1rem 0;
         }
-
+        
         .tab-content.active {
             display: block;
         }
-
-        /* DESKTOP FIX: Compact forms */
+        
         .content-wrapper {
             max-width: 900px;
             margin: 0 auto;
         }
-
+        
         .page-header {
             margin-bottom: 1.5rem;
         }
-
+        
         .page-title {
             font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
             margin: 0 0 0.5rem 0;
         }
-
+        
         .page-subtitle {
             font-size: 13px;
             color: var(--text-secondary);
             margin: 0;
         }
 
+        .search-box {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            margin-bottom: 1rem;
+            background: var(--surface);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+        }
+        
         .form-group {
             margin-bottom: 1rem;
         }
-
+        
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
@@ -195,7 +209,7 @@
             color: var(--text-primary);
             font-size: 13px;
         }
-
+        
         .form-group input, 
         .form-group select, 
         .form-group textarea {
@@ -208,7 +222,7 @@
             background: var(--surface);
             font-family: inherit;
         }
-
+        
         .form-group input:focus, 
         .form-group select:focus, 
         .form-group textarea:focus {
@@ -216,17 +230,17 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
         }
-
+        
         .form-row {
             display: flex;
             gap: 0.75rem;
             align-items: end;
         }
-
+        
         .form-row .form-group {
             margin-bottom: 0;
         }
-
+        
         .btn {
             display: inline-flex;
             align-items: center;
@@ -243,76 +257,75 @@
             line-height: 1;
             font-family: inherit;
         }
-
+        
         .btn:hover {
             transform: translateY(-1px);
             box-shadow: var(--shadow-md);
         }
-
+        
         .btn:active {
             transform: translateY(0);
         }
-
+        
         .btn-primary {
             background: var(--primary-color);
             color: white;
         }
-
+        
         .btn-primary:hover {
             background: var(--primary-dark);
         }
-
+        
         .btn-secondary {
             background: var(--secondary-color);
             color: white;
         }
-
+        
         .btn-success {
             background: var(--success-color);
             color: white;
         }
-
+        
         .btn-warning {
             background: var(--warning-color);
             color: white;
         }
-
+        
         .btn-danger {
             background: var(--error-color);
             color: white;
         }
-
-        /* MOBILE FIX: White settings icon */
+        
         .btn-outline {
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.5);
             color: white;
         }
-
+        
         .btn-outline:hover {
             background: rgba(255, 255, 255, 0.1);
         }
-
+        
         .btn-small {
             padding: 0.5rem 0.75rem;
             font-size: 12px;
         }
-
+        
         .btn-large {
             padding: 1rem 1.5rem;
             font-size: 15px;
         }
-
+        
         .grid {
             display: grid;
             gap: 1rem;
             margin: 1rem 0;
         }
-
+        
         .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
         .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
         .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-
+        
         .card {
             background: var(--surface);
             border: 1px solid var(--border-color);
@@ -321,19 +334,19 @@
             box-shadow: var(--shadow);
             transition: all 0.2s ease;
         }
-
+        
         .card:hover {
             box-shadow: var(--shadow-md);
         }
-
+        
         .card.clickable {
             cursor: pointer;
         }
-
+        
         .card.clickable:hover {
             transform: translateY(-2px);
         }
-
+        
         .card h3 {
             font-size: 16px;
             font-weight: 600;
@@ -343,58 +356,58 @@
             align-items: center;
             gap: 0.5rem;
         }
-
+        
         .card h4 {
             font-size: 15px;
             font-weight: 600;
             color: var(--text-primary);
             margin: 0 0 0.5rem 0;
         }
-
+        
         .metric-card {
             text-align: center;
             padding: 1.25rem;
         }
-
+        
         .metric-value {
             font-size: 24px;
             font-weight: 700;
             color: var(--primary-color);
             margin: 0.5rem 0;
         }
-
+        
         .metric-label {
             font-size: 12px;
             color: var(--text-secondary);
             margin: 0;
         }
-
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin: 1.5rem 0;
         }
-
+        
         .table-container {
             overflow-x: auto;
             margin: 1rem 0;
         }
-
+        
         .table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
             min-width: 600px;
         }
-
+        
         .table th, 
         .table td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
-
+        
         .table th {
             background: var(--background);
             font-weight: 600;
@@ -403,11 +416,11 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
+        
         .table tbody tr:hover {
             background: var(--background);
         }
-
+        
         .cost-summary {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 1.5rem;
@@ -415,7 +428,7 @@
             border-left: 4px solid var(--primary-color);
             margin: 1rem 0;
         }
-
+        
         .cost-item {
             display: flex;
             justify-content: space-between;
@@ -424,7 +437,7 @@
             padding: 0.25rem 0;
             font-size: 13px;
         }
-
+        
         .cost-item.total {
             font-size: 15px;
             font-weight: 700;
@@ -432,7 +445,7 @@
             padding-top: 0.75rem;
             margin-top: 1rem;
         }
-
+        
         .suggested-price {
             background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
             color: white;
@@ -442,7 +455,7 @@
             text-align: center;
             font-weight: 600;
         }
-
+        
         .alert {
             padding: 1rem;
             border-radius: var(--radius);
@@ -450,48 +463,47 @@
             border-left: 4px solid;
             font-size: 13px;
         }
-
+        
         .alert-success {
             background: #f0fdf4;
             border-color: var(--success-color);
             color: #166534;
         }
-
+        
         .alert-danger {
             background: #fef2f2;
             border-color: var(--error-color);
             color: #991b1b;
         }
-
+        
         .alert-info {
             background: #eff6ff;
             border-color: var(--primary-color);
             color: #1e40af;
         }
-
+        
         .alert-warning {
             background: #fffbeb;
             border-color: var(--warning-color);
             color: #92400e;
         }
-
-        /* MOBILE FIX: Recipe cards with word wrapping */
+        
         .recipe-card {
             transition: all 0.2s ease;
             cursor: pointer;
             border: 1px solid var(--border-color);
         }
-
+        
         .recipe-card:hover {
             border-color: var(--primary-color);
             box-shadow: var(--shadow-md);
         }
-
+        
         .recipe-card h4 {
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
-
+        
         .recipe-card p {
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -499,21 +511,32 @@
             font-size: 13px;
         }
 
+        .price-changed-indicator {
+            display: inline-block;
+            background: var(--warning-color);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
         .supplier-card {
             border-left: 4px solid var(--primary-color);
         }
-
+        
         .ingredient-card {
             border-left: 4px solid var(--success-color);
         }
-
+        
         .sleek-list {
             background: var(--surface);
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
             margin: 1rem 0;
         }
-
+        
         .sleek-header {
             padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
@@ -525,41 +548,41 @@
             font-weight: 600;
             color: var(--text-primary);
         }
-
+        
         .sleek-header:hover {
             background: var(--background);
         }
-
+        
         .sleek-header.expanded {
             background: var(--background);
             border-bottom-color: var(--primary-color);
         }
-
+        
         .sleek-content {
             display: none;
             padding: 1.5rem;
         }
-
+        
         .sleek-content.expanded {
             display: block;
         }
-
+        
         .expand-icon {
             transition: transform 0.2s ease;
             color: var(--text-secondary);
         }
-
+        
         .expand-icon.expanded {
             transform: rotate(180deg);
             color: var(--primary-color);
         }
-
+        
         .item-grid {
             display: grid;
             gap: 1rem;
             margin-top: 1rem;
         }
-
+        
         .item-card {
             background: var(--background);
             padding: 1rem;
@@ -567,43 +590,43 @@
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
         }
-
+        
         .item-card:hover {
             border-color: var(--primary-color);
             box-shadow: var(--shadow);
         }
-
+        
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0.75rem;
-            cursor: pointer;
+            gap: 0.5rem;
         }
-
+        
         .item-info {
             font-size: 12px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
-
+        
         .item-info p {
             margin: 0.25rem 0;
         }
-
+        
         .item-actions {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
             margin-top: 0.75rem;
         }
-
+        
         .ingredient-details {
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid var(--border-color);
         }
-
+        
         .category-item {
             display: flex;
             justify-content: space-between;
@@ -611,11 +634,11 @@
             padding: 0.75rem 0;
             border-bottom: 1px solid var(--border-color);
         }
-
+        
         .category-item:last-child {
             border-bottom: none;
         }
-
+        
         .subcategory-item {
             margin-left: 2rem;
             font-size: 12px;
@@ -623,7 +646,7 @@
             border-left: 2px solid var(--primary-color);
             padding-left: 1rem;
         }
-
+        
         .editable-margin {
             display: inline-flex;
             align-items: center;
@@ -637,12 +660,12 @@
             margin-left: 0.5rem;
             transition: all 0.2s ease;
         }
-
+        
         .editable-margin:hover {
             background: var(--primary-dark);
             transform: scale(1.05);
         }
-
+        
         .overhead-info {
             background: #fffbeb;
             border: 1px solid #fcd34d;
@@ -652,7 +675,7 @@
             color: #92400e;
             margin-top: 0.5rem;
         }
-
+        
         .modal {
             display: none;
             position: fixed;
@@ -665,7 +688,7 @@
             backdrop-filter: blur(4px);
             overflow-y: auto;
         }
-
+        
         .modal-content {
             background: var(--surface);
             margin: 5% auto;
@@ -678,20 +701,20 @@
             box-shadow: var(--shadow-lg);
             position: relative;
         }
-
+        
         .modal-header {
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border-color);
         }
-
+        
         .modal-title {
             font-size: 18px;
             font-weight: 700;
             color: var(--text-primary);
             margin: 0;
         }
-
+        
         .close {
             position: absolute;
             top: 1rem;
@@ -709,12 +732,12 @@
             color: var(--text-secondary);
             transition: all 0.2s ease;
         }
-
+        
         .close:hover {
             background: var(--error-color);
             color: white;
         }
-
+        
         .price-history-section {
             background: var(--background);
             padding: 1.5rem;
@@ -722,29 +745,7 @@
             margin: 1rem 0;
             border: 1px solid var(--border-color);
         }
-
-        .supplier-price-entry {
-            background: var(--surface);
-            padding: 1rem;
-            margin: 0.75rem 0;
-            border-radius: var(--radius);
-            border-left: 4px solid var(--primary-color);
-            box-shadow: var(--shadow);
-        }
-
-        .supplier-price-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-history {
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 0.75rem;
-        }
-
+        
         .price-entry {
             display: flex;
             justify-content: space-between;
@@ -753,11 +754,11 @@
             border-bottom: 1px solid var(--border-color);
             font-size: 12px;
         }
-
+        
         .price-entry:last-child {
             border-bottom: none;
         }
-
+        
         .login-container {
             max-width: 400px;
             margin: 10vh auto;
@@ -767,7 +768,7 @@
             box-shadow: var(--shadow-lg);
             text-align: center;
         }
-
+        
         .login-logo {
             width: 64px;
             height: 64px;
@@ -781,39 +782,39 @@
             color: white;
             font-weight: 700;
         }
-
+        
         .login-title {
             font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
-
+        
         .login-subtitle {
             font-size: 13px;
             color: var(--text-secondary);
             margin-bottom: 2rem;
         }
-
+        
         .unit-input-group {
             display: flex;
             gap: 0.5rem;
         }
-
+        
         .unit-input-group input {
             flex: 2;
         }
-
+        
         .unit-input-group select {
             flex: 1;
             min-width: 80px;
         }
-
+        
         .rupee {
             font-family: 'Inter', system-ui, sans-serif;
             font-weight: 600;
         }
-
+        
         .badge {
             display: inline-flex;
             align-items: center;
@@ -824,154 +825,154 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
+        
         .badge-success {
             background: #dcfce7;
             color: #166534;
         }
-
+        
         .badge-warning {
             background: #fef3c7;
             color: #92400e;
         }
-
+        
         .badge-primary {
             background: #dbeafe;
             color: #1e40af;
         }
-
+        
         .hidden {
             display: none !important;
         }
-
+        
         /* Mobile optimizations */
         @media (max-width: 768px) {
             .container {
                 padding: 0 0.75rem;
             }
-
+            
             .header {
                 padding: 0.75rem 0;
             }
-
+            
             .logo-placeholder {
                 width: 36px;
                 height: 36px;
                 font-size: 14px;
             }
-
+            
             .company-info h1 {
                 font-size: 14px;
             }
-
+            
             .company-info p {
                 font-size: 10px;
             }
-
+            
             .nav-tabs {
                 margin: 0.75rem 0;
                 padding: 0.25rem;
             }
-
+            
             .tab {
                 padding: 0.65rem 0.85rem;
                 font-size: 12px;
             }
-
+            
             .tab-content {
                 padding: 1rem;
                 margin: 0.75rem 0;
             }
-
+            
             .page-title {
                 font-size: 18px;
             }
-
+            
             .page-subtitle {
                 font-size: 12px;
             }
-
+            
             .grid-2,
             .grid-3,
             .grid-4 {
                 grid-template-columns: 1fr;
             }
-
+            
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
+            
             .table {
                 font-size: 12px;
             }
-
+            
             .table th,
             .table td {
                 padding: 0.5rem;
             }
-
+            
             .modal-content {
                 margin: 2% auto;
                 padding: 1.5rem;
                 width: 95%;
             }
-
+            
             .item-header {
                 flex-direction: column;
                 gap: 0.5rem;
                 align-items: flex-start;
             }
-
+            
             .metric-value {
                 font-size: 20px;
             }
-
+            
             .form-row {
                 flex-direction: column;
                 gap: 1rem;
             }
-
+            
             .unit-input-group {
                 flex-direction: row;
             }
-
+            
             .item-actions {
                 flex-direction: column;
             }
-
+            
             .item-actions .btn {
                 width: 100%;
             }
-
+            
             .recipe-card {
                 width: 100%;
             }
-
+            
             .recipe-card h4 {
                 font-size: 14px;
             }
-
+            
             .recipe-card p {
                 font-size: 12px;
             }
         }
-
+        
         @media (max-width: 480px) {
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-
+            
             .company-info p {
                 display: none;
             }
         }
-
+        
         /* Desktop optimizations */
         @media (min-width: 769px) {
             .grid-2 {
                 grid-template-columns: repeat(2, 1fr);
             }
-
+            
             .tab-content {
                 padding: 2rem;
             }
@@ -979,7 +980,7 @@
     </style>
 </head>
 <body>
-    <!-- Login Screen - NO AUTO-FILL -->
+    <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <div class="login-logo">TO</div>
         <h2 class="login-title">TRUE ORIGIN FOODS</h2>
@@ -1019,7 +1020,7 @@
         </div>
 
         <div class="container">
-            <!-- Navigation Tabs - FIXED: Horizontal scrollable -->
+            <!-- Navigation Tabs -->
             <div class="nav-tabs">
                 <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
                 <button class="tab" onclick="showTab('costing')">Recipe Costing</button>
@@ -1027,7 +1028,7 @@
                 <button class="tab" onclick="showTab('suppliers')">Suppliers</button>
                 <button class="tab" onclick="showTab('categories')">Categories</button>
                 <button class="tab" onclick="showTab('recipes')">All Recipes</button>
-                <button class="tab" onclick="showTab('settings')">Data Management</button>
+                <button class="tab" onclick="showTab('settings')">Data</button>
             </div>
 
             <!-- Dashboard Tab -->
@@ -1037,7 +1038,7 @@
                         <h1 class="page-title">Dashboard</h1>
                         <p class="page-subtitle">Overview of your bakery operations</p>
                     </div>
-
+                    
                     <div class="stats-grid">
                         <div class="card metric-card clickable" onclick="showTab('recipes')">
                             <h3>📋 Recipes</h3>
@@ -1060,7 +1061,7 @@
                             <p class="metric-label">profit</p>
                         </div>
                     </div>
-
+                    
                     <div class="card">
                         <h3>Recent Recipes</h3>
                         <div id="recipesList">
@@ -1085,24 +1086,24 @@
                         <h1 class="page-title">Recipe & Cost Calculator</h1>
                         <p class="page-subtitle">Create accurate recipe costings</p>
                     </div>
-
+                    
                     <div id="editingRecipe" class="alert alert-info hidden">
                         <p>Editing Recipe: <span id="editingRecipeName"></span></p>
                         <button class="btn btn-secondary btn-small" onclick="cancelEdit()">Cancel Edit</button>
                     </div>
-
+                    
                     <div class="grid grid-2">
                         <div>
                             <div class="form-group">
                                 <label for="recipeName">Recipe Name:</label>
                                 <input type="text" id="recipeName" placeholder="Enter recipe name" />
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="recipeCategory">Category:</label>
                                 <select id="recipeCategory"></select>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="recipeSubcategory">Subcategory:</label>
                                 <select id="recipeSubcategory">
@@ -1110,7 +1111,7 @@
                                 </select>
                             </div>
                         </div>
-
+                        
                         <div>
                             <div class="form-group">
                                 <label for="batchSize">Batch Size (units):</label>
@@ -1124,7 +1125,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="recipeNotes">Recipe Instructions/Notes:</label>
                         <textarea id="recipeNotes" rows="3" placeholder="Enter baking instructions"></textarea>
@@ -1136,7 +1137,6 @@
                             <thead>
                                 <tr>
                                     <th>Ingredient</th>
-                                    <th>Supplier</th>
                                     <th>Quantity & Unit</th>
                                     <th>Price/Unit</th>
                                     <th>Cost</th>
@@ -1145,8 +1145,7 @@
                             </thead>
                             <tbody>
                                 <tr id="ingredientRow0">
-                                    <td><select id="ingredient0" onchange="updateIngredientSuppliers(0)"><option value="">Select</option></select></td>
-                                    <td><select id="supplier0" onchange="updateSupplierPrice(0)"><option value="">Select</option></select></td>
+                                    <td><select id="ingredient0" onchange="updateIngredientPricing(0)"><option value="">Select</option></select></td>
                                     <td>
                                         <div class="unit-input-group">
                                             <input type="number" id="quantity0" onchange="calculateRowCost(0)" oninput="calculateRowCost(0)" placeholder="0" min="0" step="0.1" />
@@ -1173,23 +1172,23 @@
                                 <label for="bakingTime">Production Time (min):</label>
                                 <input type="number" id="bakingTime" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="0" />
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="laborRate">Labor Cost/Hour (₹):</label>
                                 <input type="number" id="laborRate" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="200" step="0.01" />
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="fixedCost">Fixed Cost/Unit (₹):</label>
                                 <input type="number" id="fixedCost" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="10" step="0.01" />
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="packagingCost">Packaging/Unit (₹):</label>
                                 <input type="number" id="packagingCost" onchange="calculateTotalCost()" oninput="calculateTotalCost()" placeholder="15" step="0.01" />
                             </div>
                         </div>
-
+                        
                         <div>
                             <div class="cost-summary">
                                 <h3>Cost Summary (Batch: <span id="batchSizeDisplay">1</span>)</h3>
@@ -1222,12 +1221,12 @@
                                     <span id="costPerUnit" class="rupee">₹0</span>
                                 </div>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="profitMargin">Profit Margin (%):</label>
                                 <input type="number" id="profitMargin" onchange="calculateTotalCost()" oninput="calculateTotalCost()" value="40" step="0.1" />
                             </div>
-
+                            
                             <div class="suggested-price">
                                 Selling Price/Unit: <span id="suggestedPrice" class="rupee">₹0</span>
                             </div>
@@ -1238,53 +1237,60 @@
                         <button class="btn btn-primary btn-large" onclick="saveRecipe()">Save Recipe</button>
                         <button class="btn btn-outline" style="color: var(--text-primary); border-color: var(--border-color);" onclick="clearRecipe()">Clear</button>
                     </div>
-
+                    
                     <div id="recipeAlert" class="alert alert-success hidden">Recipe saved!</div>
                 </div>
             </div>
 
-            <!-- Ingredients Tab -->
+            <!-- Ingredients Tab - NO CATEGORIES -->
             <div id="ingredients" class="tab-content">
                 <div class="content-wrapper">
                     <div class="page-header">
                         <h1 class="page-title">Ingredient Management</h1>
-                        <p class="page-subtitle">Manage ingredients and pricing</p>
+                        <p class="page-subtitle">Manage ingredients (independent pricing)</p>
                     </div>
-
+                    
                     <div class="card">
                         <h3>Add New Ingredient</h3>
-                        <div class="form-row">
-                            <div class="form-group" style="flex: 2;">
+                        <div class="grid grid-3">
+                            <div class="form-group">
                                 <label for="newIngredientName">Name:</label>
                                 <input type="text" id="newIngredientName" placeholder="Enter name" />
                             </div>
-                            <div class="form-group" style="flex: 1;">
+                            <div class="form-group">
                                 <label for="newIngredientUnit">Unit:</label>
                                 <select id="newIngredientUnit">
                                     <option value="kg">kg</option>
                                     <option value="ltr">ltr</option>
                                     <option value="pcs">pcs</option>
+                                    <option value="g">g</option>
+                                    <option value="ml">ml</option>
                                 </select>
                             </div>
-                            <button class="btn btn-primary" onclick="addIngredientToMaster()">Add</button>
+                            <div class="form-group">
+                                <label for="newIngredientPrice">Price (per unit) ₹:</label>
+                                <input type="number" id="newIngredientPrice" placeholder="0.00" step="0.01" min="0" />
+                            </div>
                         </div>
+                        <button class="btn btn-primary" onclick="addIngredientToMaster()">Add Ingredient</button>
                     </div>
-
+                    
                     <div id="ingredientAlert" class="alert alert-success hidden">Ingredient added!</div>
 
                     <h3>Current Ingredients</h3>
+                    <input type="text" class="search-box" id="ingredientSearch" placeholder="🔍 Search ingredients..." onkeyup="filterIngredients()" />
                     <div id="ingredientsList"></div>
                 </div>
             </div>
 
-            <!-- Suppliers Tab -->
+            <!-- Suppliers Tab - WITH INGREDIENT LINKING -->
             <div id="suppliers" class="tab-content">
                 <div class="content-wrapper">
                     <div class="page-header">
                         <h1 class="page-title">Supplier Management</h1>
-                        <p class="page-subtitle">Manage supplier relationships</p>
+                        <p class="page-subtitle">Manage suppliers and their product pricing</p>
                     </div>
-
+                    
                     <div class="card">
                         <h3>Add New Supplier</h3>
                         <div class="grid grid-3">
@@ -1292,29 +1298,30 @@
                                 <label for="newSupplierName">Name:</label>
                                 <input type="text" id="newSupplierName" placeholder="Supplier name" />
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="newSupplierContact">Contact:</label>
                                 <input type="text" id="newSupplierContact" placeholder="Phone" />
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="newSupplierEmail">Email:</label>
                                 <input type="email" id="newSupplierEmail" placeholder="Email" />
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="newSupplierCreditDays">Credit Days:</label>
                             <input type="number" id="newSupplierCreditDays" placeholder="30" min="0" />
                         </div>
-
+                        
                         <button class="btn btn-primary" onclick="addNewSupplier()">Add Supplier</button>
                     </div>
-
+                    
                     <div id="supplierAlert" class="alert alert-success hidden">Supplier added!</div>
-
+                    
                     <h3>Current Suppliers</h3>
+                    <input type="text" class="search-box" id="supplierSearch" placeholder="🔍 Search suppliers..." onkeyup="filterSuppliers()" />
                     <div id="suppliersList"></div>
                 </div>
             </div>
@@ -1334,7 +1341,7 @@
                         <h1 class="page-title">Category Management</h1>
                         <p class="page-subtitle">Organize products & set margins</p>
                     </div>
-
+                    
                     <div class="grid grid-2">
                         <div class="card">
                             <h3>Add Category</h3>
@@ -1348,7 +1355,7 @@
                             </div>
                             <button class="btn btn-primary" onclick="addCategory()">Add</button>
                         </div>
-
+                        
                         <div class="card">
                             <h3>Add Subcategory</h3>
                             <div class="form-group">
@@ -1362,7 +1369,7 @@
                             <button class="btn btn-primary" onclick="addSubcategory()">Add</button>
                         </div>
                     </div>
-
+                    
                     <div id="categoryAlert" class="alert alert-success hidden">Category updated!</div>
 
                     <h3>Current Categories</h3>
@@ -1378,6 +1385,8 @@
                         <p class="page-subtitle">View and manage saved recipes</p>
                     </div>
 
+                    <input type="text" class="search-box" id="recipeSearch" placeholder="🔍 Search recipes..." onkeyup="filterRecipes()" />
+                    
                     <div class="grid grid-2">
                         <div class="card">
                             <h3>Recipe Summary</h3>
@@ -1403,17 +1412,17 @@
                         <h1 class="page-title">Data Management</h1>
                         <p class="page-subtitle">Backup and restore data</p>
                     </div>
-
+                    
                     <div class="card">
                         <h3>🔒 Data Backup</h3>
                         <p>Export/import your business data safely.</p>
-
+                        
                         <div style="display: flex; gap: 0.75rem; margin: 1.5rem 0;">
                             <button class="btn btn-success" onclick="exportData()">📥 Export</button>
                             <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import</button>
                             <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)" />
                         </div>
-
+                        
                         <div class="alert alert-info">
                             <strong>Backup Recommended:</strong> Export regularly and store safely.
                         </div>
@@ -1428,7 +1437,7 @@
         </div>
     </div>
 
-    <!-- All Modals -->
+    <!-- Modals -->
     <div id="passwordModal" class="modal">
         <div class="modal-content">
             <button class="close" onclick="closePasswordModal()">×</button>
@@ -1449,6 +1458,45 @@
             </div>
             <button class="btn btn-primary" onclick="changePassword()">Change Password</button>
             <div id="passwordAlert" class="alert alert-danger hidden"></div>
+        </div>
+    </div>
+
+    <div id="ingredientEditModal" class="modal">
+        <div class="modal-content">
+            <button class="close" onclick="closeModal('ingredientEditModal')">×</button>
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Ingredient</h3>
+            </div>
+            <input type="hidden" id="editingIngredientId" />
+            <div class="form-group">
+                <label for="editIngredientName">Name:</label>
+                <input type="text" id="editIngredientName" />
+            </div>
+            <div class="form-group">
+                <label for="editIngredientUnit">Unit:</label>
+                <select id="editIngredientUnit">
+                    <option value="kg">kg</option>
+                    <option value="ltr">ltr</option>
+                    <option value="pcs">pcs</option>
+                    <option value="g">g</option>
+                    <option value="ml">ml</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editIngredientPrice">Current Price (per unit) ₹:</label>
+                <input type="number" id="editIngredientPrice" step="0.01" min="0" />
+            </div>
+            <button class="btn btn-primary" onclick="saveIngredientEdit()">Save Changes</button>
+        </div>
+    </div>
+
+    <div id="priceHistoryModal" class="modal">
+        <div class="modal-content">
+            <button class="close" onclick="closePriceHistoryModal()">×</button>
+            <div class="modal-header">
+                <h3 class="modal-title" id="priceHistoryTitle">Price History</h3>
+            </div>
+            <div id="priceHistoryContent"></div>
         </div>
     </div>
 
@@ -1479,73 +1527,40 @@
         </div>
     </div>
 
-    <div id="supplierModal" class="modal">
+    <div id="supplierProductModal" class="modal">
         <div class="modal-content">
-            <button class="close" onclick="closeSupplierModal()">×</button>
+            <button class="close" onclick="closeModal('supplierProductModal')">×</button>
             <div class="modal-header">
-                <h3 class="modal-title" id="supplierModalTitle">Add Supplier</h3>
-            </div>
-            <input type="hidden" id="supplierIngredientId" />
-            <input type="hidden" id="supplierEditId" />
-            <div class="form-group">
-                <label for="supplierNameSelect">Supplier:</label>
-                <select id="supplierNameSelect">
-                    <option value="">Select supplier</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="supplierPrice">Price per <span id="supplierPriceUnit">unit</span> (₹):</label>
-                <input type="number" id="supplierPrice" placeholder="0.00" step="0.01" />
-            </div>
-            <button class="btn btn-primary" onclick="saveSupplier()">Save</button>
-            <div id="supplierModalAlert" class="alert alert-success hidden">Saved!</div>
-        </div>
-    </div>
-
-    <div id="priceHistoryModal" class="modal">
-        <div class="modal-content">
-            <button class="close" onclick="closePriceHistoryModal()">×</button>
-            <div class="modal-header">
-                <h3 class="modal-title" id="priceHistoryTitle">Price History</h3>
-            </div>
-            <div id="priceHistoryContent"></div>
-        </div>
-    </div>
-
-    <div id="productSupplierModal" class="modal">
-        <div class="modal-content">
-            <button class="close" onclick="closeModal('productSupplierModal')">×</button>
-            <div class="modal-header">
-                <h3 class="modal-title">Add Product</h3>
+                <h3 class="modal-title">Add Product to Supplier</h3>
             </div>
             <input type="hidden" id="modalSupplierId" />
             <div class="form-group">
-                <label for="modalIngredientSelect">Product:</label>
+                <label for="modalIngredientSelect">Select Product:</label>
                 <select id="modalIngredientSelect">
                     <option value="">Select</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="modalProductPrice">Price per <span id="modalPriceUnit">unit</span> (₹):</label>
-                <input type="number" id="modalProductPrice" placeholder="0.00" step="0.01" />
+                <label for="modalProductPrice">Supplier Price (₹):</label>
+                <input type="number" id="modalProductPrice" placeholder="0.00" step="0.01" min="0" />
             </div>
-            <button class="btn btn-primary" onclick="saveProductToSupplier()">Add</button>
+            <button class="btn btn-primary" onclick="saveProductToSupplier()">Add Product</button>
         </div>
     </div>
 
-    <div id="priceUpdateModal" class="modal">
+    <div id="supplierProductEditModal" class="modal">
         <div class="modal-content">
-            <button class="close" onclick="closeModal('priceUpdateModal')">×</button>
+            <button class="close" onclick="closeModal('supplierProductEditModal')">×</button>
             <div class="modal-header">
-                <h3 class="modal-title">Update Price</h3>
+                <h3 class="modal-title">Edit Supplier Product Price</h3>
             </div>
-            <input type="hidden" id="updateIngredientId" />
-            <input type="hidden" id="updateSupplierId" />
+            <input type="hidden" id="editSupplierProductId" />
+            <input type="hidden" id="editSupplierIdForProduct" />
             <div class="form-group">
-                <label for="currentPriceInput">New price per <span id="updatePriceUnit">unit</span> (₹):</label>
-                <input type="number" id="currentPriceInput" placeholder="0.00" step="0.01" />
+                <label for="editSupplierProductPrice">Supplier Price (₹):</label>
+                <input type="number" id="editSupplierProductPrice" placeholder="0.00" step="0.01" min="0" />
             </div>
-            <button class="btn btn-primary" onclick="saveUpdatedPrice()">Update</button>
+            <button class="btn btn-primary" onclick="saveSupplierProductEdit()">Save Changes</button>
         </div>
     </div>
 
